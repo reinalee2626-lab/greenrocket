@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GreenRocket</title>
+    <script>
+      // 🔴 PASTE YOUR OPENAI API KEY HERE
+      const apiKey = "YOUR_API_KEY_HERE"; // 🔴 replace this
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -166,9 +170,6 @@
     </div>
 
     <script>
-      const apiKey = "YOUR_API_KEY_HERE";
-      const isPreviewMode = window.location.protocol === "file:";
-
       const form = document.getElementById("search-form");
       const productInput = document.getElementById("product-input");
       const loadingState = document.getElementById("loading-state");
@@ -186,9 +187,21 @@
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        const query = productInput.value.trim();
-        if (!query) {
+        const userInput = productInput.value.trim();
+        console.log("[GreenRocket] User input:", userInput);
+
+        if (!userInput) {
           showError("제품명을 입력해 주세요.");
+          return;
+        }
+
+        if (apiKey === "YOUR_API_KEY_HERE") {
+          showError("상단의 apiKey 자리에 실제 OpenAI API 키를 붙여 넣어 주세요.");
+          return;
+        }
+
+        if (window.location.protocol === "file:") {
+          showError("실제 API 테스트를 하려면 파일 더블클릭 대신 localhost 서버로 열어 주세요.");
           return;
         }
 
@@ -196,8 +209,8 @@
         resetStates();
 
         try {
-          const result = await analyzeProduct(query);
-          renderResult(query, result);
+          const result = await analyzeProduct(userInput);
+          renderResult(result);
         } catch (error) {
           showError(error.message || "분석 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
         } finally {
@@ -205,11 +218,7 @@
         }
       });
 
-      async function analyzeProduct(query) {
-        if (isPreviewMode) {
-          return getPreviewResult(query);
-        }
-
+      async function analyzeProduct(userInput) {
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
           method: "POST",
           headers: {
@@ -224,14 +233,16 @@
               {
                 role: "system",
                 content:
-                  "You are a Korean sustainability expert. Analyze the product or brand provided. Give it an eco-friendliness score out of 5, explain the reason briefly, and suggest one specific eco-friendly alternative that can be purchased in Korea. Keep the tone friendly, clear, practical, and trustworthy."
+                  "You are a Korean sustainability expert.\nAnalyze the exact product or brand the user provides.\n\nYour response MUST be specific to that product.\nDo NOT give generic eco advice.\n\nIf the exact product is unclear, infer the most likely category (e.g. detergent, shampoo, wet wipes, tumbler) and analyze cautiously.\n\nDifferent product types MUST produce clearly different reasoning and recommendations.\n\nForce product-specific logic:\n- Wet wipes: mention disposable use and waste.\n- Shampoo: mention bottles and refill options.\n- Detergent: mention concentration, refill, or packaging.\n- Tumbler: mention reusability and replacement of disposable items.\n\nReturn strict JSON only with these keys:\n- product_name\n- product_category\n- score\n- reason\n- alternative_name\n- alternative_reason\n- impact_of_switch\n- coupang_search_keyword"
               },
               {
                 role: "user",
                 content:
-                  `제품 또는 브랜드명: ${query}\n` +
+                  `제품 또는 브랜드명: ${userInput}\n` +
                   "반드시 아래 JSON 형식으로만 답변해 주세요.\n" +
                   '{' +
+                  '"product_name":"사용자가 입력한 제품 또는 해석한 구체적 제품명", ' +
+                  '"product_category":"제품 카테고리", ' +
                   '"score":"5점 만점 중 점수", ' +
                   '"reason":"짧고 실용적인 이유", ' +
                   '"alternative_name":"더 나은 대안 제품명", ' +
@@ -250,6 +261,7 @@
         }
 
         const data = await response.json();
+        console.log("[GreenRocket] API response:", data);
         const content = data.choices?.[0]?.message?.content;
 
         if (!content) {
@@ -257,14 +269,20 @@
         }
 
         const parsed = JSON.parse(content);
-        return normalizeResult(parsed, query);
+        console.log("[GreenRocket] Parsed result:", parsed);
+        return normalizeResult(parsed, userInput);
       }
 
-      function normalizeResult(parsed, query) {
+      function normalizeResult(parsed, userInput) {
         const reasons = normalizeReason(parsed.reason);
-        const searchKeyword = parsed.coupang_search_keyword || parsed.alternative_name || `${query} 친환경`;
+        const searchKeyword =
+          parsed.coupang_search_keyword ||
+          parsed.alternative_name ||
+          `${userInput} 친환경`;
 
         return {
+          productName: parsed.product_name || userInput,
+          productCategory: parsed.product_category || "기타",
           score: parsed.score || "정보 없음",
           reasons:
             reasons.length > 0
@@ -279,12 +297,12 @@
         };
       }
 
-      function renderResult(query, result) {
+      function renderResult(result) {
         emptyState.classList.add("hidden");
         errorState.classList.add("hidden");
         resultCard.classList.remove("hidden");
 
-        productName.textContent = query;
+        productName.textContent = result.productName;
         scoreText.textContent = result.score;
         alternativeName.textContent = result.alternativeName;
         alternativeReason.textContent = result.alternativeReason;
@@ -315,21 +333,6 @@
         resultCard.classList.add("hidden");
         errorState.textContent = message;
         errorState.classList.remove("hidden");
-      }
-
-      function getPreviewResult(query) {
-        return Promise.resolve({
-          score: "3.5 / 5",
-          reasons: normalizeReason(
-            `${query} 제품은 편의성과 접근성은 좋지만, 포장재와 원료 정보가 충분히 친환경적이지 않을 수 있어요. 재사용 가능 여부나 리필 옵션을 함께 보면 더 나은 선택에 도움이 됩니다.`
-          ),
-          alternativeName: `${query} 친환경 대체 제품`,
-          alternativeReason:
-            "리필형 또는 저자극 성분 제품은 폐기물을 줄이고 일상에서 부담 없이 선택하기 좋은 편입니다.",
-          impactOfSwitch:
-            "일회용 소비와 포장 폐기물을 조금 줄이고, 리필이나 재사용 중심의 선택으로 바꾸는 데 도움이 될 수 있어요.",
-          productUrl: `https://www.coupang.com/np/search?q=${encodeURIComponent(query + " 친환경")}`
-        });
       }
 
       function normalizeReason(reason) {
