@@ -194,15 +194,27 @@
           return;
         }
 
-        if (apiKey === "YOUR_API_KEY_HERE") {
-          showError("상단의 apiKey 자리에 실제 OpenAI API 키를 붙여 넣어 주세요.");
-          return;
-        }
+        async function analyzeProduct(userInput) {
+  const response = await fetch("/api/analyze", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      product: userInput
+    })
+  });
 
-        if (window.location.protocol === "file:") {
-          showError("실제 API 테스트를 하려면 파일 더블클릭 대신 localhost 서버로 열어 주세요.");
-          return;
-        }
+  if (!response.ok) {
+    const errorPayload = await response.json().catch(() => null);
+    const errorMessage = errorPayload?.error || "API 오류가 발생했습니다.";
+    throw new Error(errorMessage);
+  }
+
+  const data = await response.json();
+  console.log("[GreenRocket] API response:", data);
+  return normalizeResult(data, userInput);
+}
 
         setLoading(true);
         resetStates();
