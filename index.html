@@ -11,17 +11,23 @@
           extend: {
             colors: {
               carbon: "#0B0B0B",
-              concrete: "#8A8A8A",
-              ash: "#D7D7D2",
-              panel: "#151515",
-              line: "#303030",
+              panel: "#121212",
+              panel2: "#171717",
+              line: "#2B2B2B",
+              ash: "#DDDCD5",
+              concrete: "#8C8B85",
               safety: "#FF5A1F",
-              verified: "#14532D"
+              verified: "#1F5A36"
             },
             fontFamily: {
+              display: [
+                "IBM Plex Sans Condensed",
+                "Archivo Narrow",
+                "sans-serif"
+              ],
               mono: [
-                "JetBrains Mono",
                 "IBM Plex Mono",
+                "JetBrains Mono",
                 "SFMono-Regular",
                 "Consolas",
                 "monospace"
@@ -32,6 +38,9 @@
                 "Noto Sans KR",
                 "sans-serif"
               ]
+            },
+            letterSpacing: {
+              tightest: "-0.08em"
             }
           }
         }
@@ -40,61 +49,109 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       body {
         background: #0b0b0b;
+        color: #dddcd5;
       }
 
-      .bottle-mark {
+      .scanner-shell {
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        background-size: 24px 24px;
+        background-position: center center;
+      }
+
+      .logo-mark {
         position: relative;
-        width: 44px;
-        height: 58px;
-        border: 2px solid #d7d7d2;
-        border-top-width: 8px;
+        width: 46px;
+        height: 60px;
+        border: 3px solid #dddcd5;
+        border-top-width: 9px;
+        background: transparent;
+        box-sizing: border-box;
       }
 
-      .bottle-mark::before {
+      .logo-mark::before {
         content: "";
         position: absolute;
-        left: 19px;
+        left: 10px;
+        top: 19px;
+        width: 23px;
+        height: 3px;
+        background: #ff5a1f;
+        transform: rotate(-31deg);
+      }
+
+      .logo-mark::after {
+        content: "";
+        position: absolute;
+        left: 20px;
         bottom: -8px;
-        width: 3px;
-        height: 48px;
-        background: #14532d;
-        transform: rotate(-12deg);
+        width: 4px;
+        height: 46px;
+        background: #1f5a36;
+        transform: rotate(-4deg);
       }
 
-      .bottle-mark::after {
-        content: "";
+      .logo-leaf {
         position: absolute;
-        left: 21px;
+        left: 23px;
         top: 11px;
-        width: 21px;
-        height: 13px;
-        border: 3px solid #14532d;
+        width: 14px;
+        height: 10px;
+        border: 3px solid #1f5a36;
         border-left: 0;
         border-bottom: 0;
-        transform: rotate(-28deg);
+        transform: rotate(-33deg);
+      }
+
+      .logo-leaf.secondary {
+        left: 9px;
+        top: 26px;
+        width: 10px;
+        height: 7px;
+        transform: rotate(150deg);
+      }
+
+      .hero-headline {
+        text-wrap: balance;
+        font-weight: 700;
+        letter-spacing: -0.022em;
+        line-height: 0.97;
+      }
+
+      .signal-bars span {
+        display: block;
+        width: 8px;
+        border: 1px solid rgba(255, 90, 31, 0.72);
       }
     </style>
   </head>
-  <body class="min-h-screen bg-carbon font-mono text-ash antialiased">
-    <div class="min-h-screen">
-      <header class="border-b border-line bg-carbon">
+  <body class="min-h-screen bg-carbon font-sans antialiased">
+    <div class="scanner-shell min-h-screen">
+      <header class="border-b border-line bg-carbon/95">
         <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-6 lg:px-8">
           <div class="flex items-center gap-4">
-            <div class="bottle-mark" aria-hidden="true"></div>
-            <div>
-              <p class="text-lg font-black uppercase tracking-[0.18em] text-ash">GreenRocket</p>
-              <p class="mt-1 text-[10px] uppercase tracking-[0.28em] text-concrete">
+            <div class="logo-mark" aria-hidden="true">
+              <span class="logo-leaf"></span>
+              <span class="logo-leaf secondary"></span>
+            </div>
+            <div class="leading-none">
+              <p class="font-display text-xl font-bold uppercase tracking-[0.16em] text-ash">
+                GreenRocket
+              </p>
+              <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.28em] text-concrete">
                 Product Reality Scanner
               </p>
             </div>
           </div>
-          <p class="hidden border border-line px-3 py-2 text-xs uppercase tracking-[0.2em] text-concrete sm:block">
+
+          <p class="hidden border border-line bg-panel2 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-concrete sm:block">
             Once you see it, you can’t unsee it.
           </p>
         </div>
@@ -103,131 +160,171 @@
       <main class="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-16 lg:px-8">
         <section class="grid gap-10 border-b border-line pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>
-            <p class="inline-block border border-safety px-3 py-2 text-xs font-bold uppercase tracking-[0.28em] text-safety">
+            <p class="inline-block border border-safety bg-panel px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.26em] text-safety">
               Audit Mode / V1
             </p>
-            <h1 class="mt-7 max-w-4xl text-5xl font-black uppercase leading-none tracking-[-0.06em] text-ash sm:text-7xl lg:text-8xl">
+
+            <h1 class="hero-headline mt-7 max-w-5xl font-display text-[3.1rem] uppercase text-ash sm:text-[4.85rem] lg:text-[5.9rem]">
               SCAN. DON’T GUESS.
             </h1>
-            <p class="mt-6 max-w-2xl text-lg font-semibold uppercase tracking-[-0.02em] text-concrete sm:text-2xl">
-              Most products look harmless. They’re not.
+
+            <p class="mt-6 max-w-2xl font-display text-2xl font-semibold leading-[1.02] tracking-[-0.03em] text-ash sm:text-4xl">
+              Most products look harmless.
+              <br />
+              They’re not.
             </p>
-            <p class="mt-4 max-w-xl font-sans text-sm leading-7 text-concrete">
-              You don’t see it. It builds anyway. GreenRocket scans the hidden waste pattern and gives you one better next step.
+
+            <p class="mt-5 max-w-xl font-display text-lg font-semibold tracking-[-0.012em] text-verified sm:text-[1.35rem]">
+              You don’t see it. It builds anyway.
+            </p>
+            <p class="mt-3 max-w-xl font-sans text-sm leading-7 text-concrete">
+              GreenRocket scans the hidden waste pattern and gives you one better next step.
             </p>
           </div>
 
-          <form id="search-form" class="border border-line bg-panel p-4">
-            <label for="product-input" class="block text-xs font-bold uppercase tracking-[0.22em] text-concrete">
-              Product Input
-            </label>
-            <div class="mt-4 flex border border-ash bg-carbon">
-              <input
-                id="product-input"
-                type="text"
-                required
-                placeholder="TYPE PRODUCT / BRAND"
-                class="h-14 min-w-0 flex-1 bg-carbon px-4 font-mono text-sm uppercase text-ash outline-none placeholder:text-concrete"
-              />
-              <button
-                type="submit"
-                class="h-14 flex-none border-l border-ash bg-ash px-4 text-xs font-black uppercase tracking-[0.16em] text-carbon transition hover:bg-safety sm:px-6"
-              >
-                Start Audit
-              </button>
-            </div>
-            <p class="mt-3 text-xs uppercase tracking-[0.12em] text-concrete">
-              Specific names sharpen the scan. Broad categories still work.
-            </p>
-          </form>
+          <div class="border border-line bg-[#191919] p-4">
+            <form id="search-form">
+              <label for="product-input" class="block font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-concrete">
+                Product Input
+              </label>
+              <div class="mt-4 flex border border-ash bg-carbon">
+                <input
+                  id="product-input"
+                  type="text"
+                  required
+                  placeholder="TYPE PRODUCT / BRAND"
+                  class="h-14 min-w-0 flex-1 bg-carbon px-4 font-mono text-sm uppercase tracking-[0.04em] text-ash outline-none placeholder:text-concrete"
+                />
+                <button
+                  type="submit"
+                  class="h-14 flex-none border-l border-ash bg-ash px-4 font-mono text-xs font-bold uppercase tracking-[0.14em] text-carbon transition hover:bg-safety sm:px-6"
+                >
+                  Start Audit
+                </button>
+              </div>
+              <p class="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-concrete">
+                Specific names sharpen the scan. Broad categories still work.
+              </p>
+            </form>
+          </div>
         </section>
 
         <section class="mt-10">
           <div
             id="loading-state"
-            class="hidden border border-line bg-panel px-5 py-4 text-sm uppercase tracking-[0.16em] text-concrete"
+            class="hidden border border-line bg-[#191919] px-5 py-4 font-mono text-sm uppercase tracking-[0.16em] text-concrete"
           >
             Scanning hidden waste pattern...
           </div>
 
           <div
             id="error-state"
-            class="hidden border border-safety bg-panel px-5 py-4 text-sm leading-7 text-safety"
+            class="hidden border border-safety bg-[#191919] px-5 py-4 font-sans text-sm leading-7 text-safety"
           ></div>
 
           <div
             id="empty-state"
-            class="border border-dashed border-line bg-panel px-5 py-12 text-center"
+            class="border border-dashed border-line bg-[#131313] px-5 py-12 text-center"
           >
-            <p class="text-sm font-bold uppercase tracking-[0.18em] text-concrete">No scan loaded</p>
-            <p class="mt-3 font-sans text-sm leading-7 text-concrete">
+            <p class="font-mono text-sm font-semibold uppercase tracking-[0.18em] text-concrete">
+              No scan loaded
+            </p>
+            <p class="mx-auto mt-3 max-w-2xl font-sans text-sm leading-7 text-concrete">
               Enter a product. GreenRocket will reveal what stacks, what to switch, and where the better move starts.
             </p>
           </div>
 
-          <article id="result-card" class="hidden border border-ash bg-carbon">
-            <div class="grid border-b border-line lg:grid-cols-[1fr_280px]">
-              <div class="p-5 sm:p-7">
-                <p class="text-xs font-bold uppercase tracking-[0.24em] text-concrete">Scan Target</p>
-                <h2 id="product-name" class="mt-3 text-3xl font-black uppercase tracking-[-0.04em] text-ash sm:text-5xl"></h2>
-                <p id="analysis-basis-note" class="mt-4 font-sans text-sm leading-7 text-concrete"></p>
+          <article id="result-card" class="hidden border border-ash bg-[#101010]">
+            <div class="grid border-b border-line lg:grid-cols-[1fr_300px]">
+              <div class="bg-[#131313] p-5 sm:p-7">
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-concrete">
+                  Scan Target
+                </p>
+                <h2
+                  id="product-name"
+                  class="mt-3 font-display text-4xl font-bold uppercase leading-[0.94] tracking-[-0.05em] text-ash sm:text-6xl"
+                ></h2>
+                <p id="analysis-basis-note" class="mt-4 max-w-2xl font-sans text-sm leading-7 text-concrete"></p>
               </div>
-              <div id="system-flag-box" class="border-t border-line p-5 lg:border-l lg:border-t-0 sm:p-7">
-                <p class="text-xs font-bold uppercase tracking-[0.24em] text-concrete">System Flag</p>
-                <p id="system-flag-text" class="mt-4 border px-3 py-3 text-center text-lg font-black uppercase tracking-[0.14em]"></p>
+
+              <div id="system-flag-box" class="border-t border-line bg-[#181818] p-5 lg:border-l lg:border-t-0 sm:p-7">
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-concrete">
+                  System Flag
+                </p>
+                <p
+                  id="system-flag-text"
+                  class="mt-4 border px-3 py-3 text-center font-display text-xl font-bold uppercase tracking-[0.1em]"
+                ></p>
                 <p id="system-flag-caption" class="mt-4 font-sans text-sm leading-6 text-concrete"></p>
               </div>
             </div>
 
             <div class="grid border-b border-line sm:grid-cols-3">
-              <div class="border-b border-line p-5 sm:border-b-0 sm:border-r">
-                <p class="text-xs font-bold uppercase tracking-[0.22em] text-concrete">Analysis Level</p>
-                <p id="specificity-text" class="mt-3 text-sm font-black uppercase text-ash"></p>
+              <div class="border-b border-line bg-[#131313] p-5 sm:border-b-0 sm:border-r">
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-concrete">
+                  Analysis Level
+                </p>
+                <p id="specificity-text" class="mt-3 font-mono text-sm font-semibold uppercase tracking-[0.12em] text-ash"></p>
               </div>
-              <div class="border-b border-line p-5 sm:border-b-0 sm:border-r">
-                <p class="text-xs font-bold uppercase tracking-[0.22em] text-concrete">Confidence</p>
-                <p id="confidence-text" class="mt-3 text-sm font-black uppercase text-ash"></p>
+              <div class="border-b border-line bg-[#131313] p-5 sm:border-b-0 sm:border-r">
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-concrete">
+                  Confidence
+                </p>
+                <p id="confidence-text" class="mt-3 font-mono text-sm font-semibold uppercase tracking-[0.12em] text-ash"></p>
               </div>
-              <div class="p-5">
-                <p class="text-xs font-bold uppercase tracking-[0.22em] text-concrete">GreenRocket Read</p>
-                <p id="estimated-level-text" class="mt-3 font-sans text-sm font-bold leading-6 text-ash"></p>
+              <div class="bg-[#131313] p-5">
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-concrete">
+                  GreenRocket Read
+                </p>
+                <p id="estimated-level-text" class="mt-3 font-sans text-sm font-semibold leading-6 text-ash"></p>
               </div>
             </div>
 
-            <div class="grid lg:grid-cols-[1fr_0.9fr]">
-              <section class="border-b border-line p-5 sm:p-7 lg:border-b-0 lg:border-r">
-                <p class="text-xs font-bold uppercase tracking-[0.24em] text-safety">WHAT THIS REALLY DOES</p>
-                <p id="main-considerations" class="mt-4 font-sans text-base leading-8 text-ash"></p>
+            <div class="grid lg:grid-cols-[1fr_0.92fr]">
+              <section class="border-b border-line bg-[#121212] p-5 sm:p-7 lg:border-b-0 lg:border-r">
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-safety">
+                  WHAT THIS REALLY DOES
+                </p>
+                <p id="main-considerations" class="mt-4 max-w-2xl font-sans text-base leading-8 text-ash"></p>
                 <div class="mt-6 flex items-center gap-4 border-l-4 border-safety pl-4">
-                  <p class="text-sm font-black uppercase tracking-[0.12em] text-safety">
+                  <p class="font-mono text-sm font-bold uppercase tracking-[0.12em] text-safety">
                     This stacks. Fast.
                   </p>
-                  <div class="flex flex-1 items-end gap-1" aria-hidden="true">
-                    <span class="h-3 w-2 border border-safety/60"></span>
-                    <span class="h-4 w-2 border border-safety/60"></span>
-                    <span class="h-5 w-2 border border-safety/70"></span>
-                    <span class="h-6 w-2 border border-safety/80"></span>
-                    <span class="h-7 w-2 border border-safety"></span>
+                  <div class="signal-bars flex flex-1 items-end gap-1" aria-hidden="true">
+                    <span class="h-3"></span>
+                    <span class="h-4"></span>
+                    <span class="h-5"></span>
+                    <span class="h-6"></span>
+                    <span class="h-7 border-safety"></span>
                   </div>
                 </div>
               </section>
 
-              <section class="p-5 sm:p-7">
-                <p class="text-xs font-bold uppercase tracking-[0.24em] text-verified">THE UPGRADE</p>
-                <h3 id="alternative-name" class="mt-4 text-2xl font-black uppercase tracking-[-0.03em] text-ash"></h3>
+              <section class="bg-[#171717] p-5 sm:p-7">
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-verified">
+                  THE UPGRADE
+                </p>
+                <h3
+                  id="alternative-name"
+                  class="mt-4 font-display text-3xl font-bold uppercase leading-[0.98] tracking-[-0.04em] text-ash"
+                ></h3>
 
                 <div class="mt-6 border-t border-line pt-5">
-                  <p class="text-xs font-bold uppercase tracking-[0.2em] text-concrete">WHY THIS DIRECTION WORKS</p>
+                  <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-concrete">
+                    WHY THIS DIRECTION WORKS
+                  </p>
                   <p id="alternative-reason" class="mt-3 font-sans text-sm leading-7 text-ash"></p>
                 </div>
 
                 <div class="mt-6 border-t border-line pt-5">
-                  <p class="text-xs font-bold uppercase tracking-[0.2em] text-concrete">REAL SWAP</p>
+                  <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-concrete">
+                    REAL SWAP
+                  </p>
                   <p id="impact-of-switch" class="mt-3 font-sans text-sm leading-7 text-ash"></p>
                 </div>
 
-                <div class="mt-7 border border-verified p-4">
-                  <p class="text-sm font-black uppercase tracking-[0.16em] text-verified">
+                <div class="mt-7 border border-verified bg-carbon p-4">
+                  <p class="font-mono text-sm font-bold uppercase tracking-[0.16em] text-verified">
                     No reset. Just a better switch.
                   </p>
                   <a
@@ -235,19 +332,19 @@
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="mt-4 inline-flex w-full items-center justify-center border border-verified bg-verified px-5 py-4 text-sm font-black uppercase tracking-[0.16em] text-ash transition hover:bg-carbon hover:text-verified"
+                    class="mt-4 inline-flex w-full items-center justify-center border border-verified bg-verified px-5 py-4 font-mono text-sm font-bold uppercase tracking-[0.16em] text-ash transition hover:bg-carbon hover:text-verified"
                   >
                     UPGRADE THIS →
                   </a>
-                  <p class="mt-3 text-center text-[11px] uppercase tracking-[0.2em] text-concrete">
+                  <p class="mt-3 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-concrete">
                     Available on Coupang
                   </p>
                 </div>
               </section>
             </div>
 
-            <p class="border-t border-line px-5 py-4 font-sans text-xs leading-6 text-concrete sm:px-7">
-              <span class="mb-3 block font-mono text-[11px] font-black uppercase tracking-[0.22em] text-ash">
+            <p class="border-t border-line bg-[#131313] px-5 py-4 font-sans text-xs leading-6 text-concrete sm:px-7">
+              <span class="mb-3 block font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-ash">
                 Once you see it, you can’t unsee it.
               </span>
               Audit note: this is a directional scan based on product patterns and available context. No fake precision. No lab-grade claim.
@@ -255,26 +352,29 @@
           </article>
         </section>
 
-        <section class="mt-10 border border-line bg-panel p-5 sm:p-7">
-          <p class="text-xs font-black uppercase tracking-[0.24em] text-concrete">Operator Note</p>
-        <p class="mt-4 font-sans text-sm leading-7 text-concrete">
-  저는 13살입니다.<br><br>
+        <section class="mt-10 border border-line bg-[#181818] p-5 sm:p-7">
+          <p class="font-mono text-[11px] font-bold uppercase tracking-[0.24em] text-concrete">
+            Operator Note
+          </p>
 
-  대부분의 사람들은<br>
-  자기가 쓰는 걸 굳이 생각하지 않습니다.<br><br>
+          <p class="mt-4 max-w-3xl font-sans text-sm leading-7 text-concrete">
+            저는 13살입니다.<br /><br />
 
-  그래서 만들었습니다.<br><br>
+            대부분의 사람들은<br />
+            자기가 쓰는 걸 굳이 생각하지 않습니다.<br /><br />
 
-  이게 모든 걸 바꾸진 않습니다.<br>
-  다만, 더 이상 그냥 넘기기 어렵게 만듭니다.<br><br>
+            그래서 만들었습니다.<br /><br />
 
-  🌱 일부 링크는 서비스 유지에 사용될 수 있습니다<br>
-  구매 가격에는 영향이 없습니다.
-</p>
+            이게 모든 걸 바꾸진 않습니다.<br />
+            다만, 더 이상 그냥 넘기기 어렵게 만듭니다.<br /><br />
 
-<p class="mt-4 font-sans text-xs leading-6 text-concrete opacity-60">
-  쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다
-</p>
+            🌱 일부 링크는 서비스 유지에 사용될 수 있습니다<br />
+            구매 가격에는 영향이 없습니다.
+          </p>
+
+          <p class="mt-4 font-sans text-xs leading-6 text-concrete opacity-60">
+            쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다
+          </p>
         </section>
       </main>
     </div>
