@@ -136,6 +136,17 @@
 
               <div class="rounded-[2rem] border border-line bg-white p-6 shadow-soft sm:p-8">
                 <p class="text-sm font-semibold text-forest">제품 살펴보기</p>
+                <div class="mt-5 rounded-3xl border border-line bg-sage p-5 shadow-card">
+                  <p class="text-base font-bold tracking-[-0.02em] text-text">구매하기 전에 잠깐만요</p>
+                  <div class="mt-3 space-y-2 text-sm leading-7 text-subtext">
+                    <p>이미 비슷한 제품이 있나요?</p>
+                    <p>지금 꼭 필요한가요?</p>
+                    <p>한 번만 쓰고 버려지지는 않나요?</p>
+                  </div>
+                  <p class="mt-4 text-sm font-semibold text-forest">
+                    사지 않는 것도 지속가능한 선택입니다.
+                  </p>
+                </div>
                 <form id="search-form" class="mt-5">
                   <label for="product-input" class="sr-only">제품 입력</label>
                   <div class="rounded-2xl border border-line bg-cream p-2">
@@ -194,7 +205,7 @@
                 </div>
 
                 <div class="rounded-2xl border border-line bg-mint px-5 py-4">
-                  <p class="text-sm font-medium text-subtext">친환경 점수</p>
+                  <p class="text-sm font-medium text-subtext">소비 참고</p>
                   <p class="mt-2 text-2xl font-extrabold tracking-[-0.03em] text-forest sm:text-3xl">
                     <span id="eco-rating-text">3</span>
                     <span class="text-lg font-semibold text-subtext">/ 5</span>
@@ -202,20 +213,32 @@
                 </div>
               </div>
 
-              <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                <div class="rounded-2xl border border-line/70 bg-cream p-5">
-                  <p class="text-sm font-semibold text-forest">한 줄 설명</p>
-                  <p id="reason-text" class="mt-3 text-sm leading-7 text-subtext"></p>
-                </div>
-                <div class="rounded-2xl border border-line/70 bg-cream p-5">
-                  <p class="text-sm font-semibold text-forest">한 번 더 생각하기</p>
+              <div class="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+                <div class="rounded-3xl border border-forest/15 bg-mint p-6 shadow-card">
+                  <p class="text-sm font-semibold text-forest">먼저: 필요한 소비인지 생각하기</p>
                   <p id="need-reflection-text" class="mt-3 text-sm leading-7 text-subtext">
                     이미 비슷한 제품이 있다면 새로 사지 않는 것이 가장 좋은 선택일 수 있어요.
                   </p>
+                  <p class="mt-4 text-sm font-semibold text-moss">
+                    사지 않는 것도 지속가능한 선택입니다.
+                  </p>
                 </div>
                 <div class="rounded-2xl border border-line/70 bg-cream p-5">
-                  <p class="text-sm font-semibold text-forest">현재 선택에 대한 안내</p>
+                  <p class="text-sm font-semibold text-forest">소비 참고</p>
+                  <p class="mt-3 text-sm leading-7 text-subtext">
+                    이 점수는 절대적인 정답이 아니라, 구매를 다시 생각해보는 작은 기준이에요.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <div class="rounded-2xl border border-line/70 bg-cream p-5">
+                  <p class="text-sm font-semibold text-forest">다음: 현재 선택 이해하기</p>
                   <p id="already-good-text" class="mt-3 text-sm leading-7 text-subtext"></p>
+                </div>
+                <div class="rounded-2xl border border-line/70 bg-cream p-5">
+                  <p class="text-sm font-semibold text-forest">현재 제품 설명</p>
+                  <p id="reason-text" class="mt-3 text-sm leading-7 text-subtext"></p>
                 </div>
                 <div class="rounded-2xl border border-line/70 bg-cream p-5">
                   <p class="text-sm font-semibold text-forest">추가 메모</p>
@@ -226,7 +249,7 @@
               <section id="alternative-section" class="mt-6 rounded-3xl border border-line bg-mint/60 p-6">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                   <div class="max-w-2xl">
-                    <p class="text-sm font-semibold text-forest">더 나은 대안</p>
+                    <p class="text-sm font-semibold text-forest">필요하다면: 더 나은 대안 보기</p>
                     <h3 id="alternative-name" class="mt-3 text-2xl font-bold tracking-[-0.03em] text-text"></h3>
                     <p id="alternative-reason" class="mt-4 text-sm leading-7 text-subtext"></p>
                   </div>
