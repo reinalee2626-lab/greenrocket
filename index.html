@@ -1,5 +1,3 @@
-```html
-===== index.html =====
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -42,6 +40,10 @@
       rel="stylesheet"
     />
     <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         font-family: "Noto Sans KR", "Pretendard", sans-serif;
         background:
@@ -49,23 +51,27 @@
           linear-gradient(180deg, #f7faf7 0%, #f3f8f4 100%);
         color: #1f2a22;
       }
+
+      .section-anchor {
+        scroll-margin-top: 96px;
+      }
     </style>
   </head>
   <body class="text-text antialiased">
     <div class="min-h-screen">
       <header class="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur">
         <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-          <a href="index.html" class="text-xl font-extrabold tracking-[-0.02em] text-forest">GreenRocket</a>
+          <a href="#tool" class="text-xl font-extrabold tracking-[-0.02em] text-forest">GreenRocket</a>
           <nav class="hidden items-center gap-7 text-sm font-medium text-subtext md:flex">
-            <a class="transition hover:text-forest" href="index.html">도구</a>
-            <a class="transition hover:text-forest" href="about.html">소개</a>
-            <a class="transition hover:text-forest" href="sustainable.html">지속가능한 소비</a>
+            <a class="transition hover:text-forest" href="#tool">도구</a>
+            <a class="transition hover:text-forest" href="#about">소개</a>
+            <a class="transition hover:text-forest" href="#sustainable">지속가능한 소비</a>
           </nav>
         </div>
       </header>
 
       <main>
-        <section>
+        <section id="tool" class="section-anchor">
           <div class="mx-auto max-w-6xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
             <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
               <div>
@@ -208,6 +214,90 @@
             </article>
           </div>
         </section>
+
+        <section id="about" class="section-anchor border-t border-line/70 bg-white/70">
+          <div class="mx-auto max-w-6xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
+            <div class="max-w-3xl rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
+              <p class="text-sm font-semibold text-forest">About / Philosophy</p>
+              <div class="mt-5 space-y-5 text-base leading-8 text-subtext">
+                <p>저는 13살입니다.</p>
+                <p>
+                  GreenRocket은 단순히 “친환경 제품을 더 사라”고 말하는 사이트가 아닙니다.
+                </p>
+                <p>
+                  가장 좋은 소비는 때로는 사지 않는 것입니다.
+                  <br />
+                  하지만 정말 필요한 소비라면, 조금 더 나은 선택을 할 수 있습니다.
+                </p>
+                <p>
+                  GreenRocket은 사람들이 물건을 사기 전에 한 번 멈추고,
+                  <br />
+                  내가 정말 필요한지, 그리고 더 지속가능한 방법은 없는지 생각하도록 돕기 위해 만들었습니다.
+                </p>
+                <p>
+                  완벽한 소비를 강요하지 않습니다.
+                  <br />
+                  작은 선택이 쌓이면, 소비를 바라보는 방식도 달라질 수 있다고 믿습니다.
+                </p>
+                <p>
+                  🌱 일부 링크는 서비스 유지에 사용될 수 있습니다.
+                  <br />
+                  구매 가격에는 영향이 없습니다.
+                </p>
+              </div>
+              <p class="mt-6 text-sm leading-6 text-subtext/80">
+                쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="sustainable" class="section-anchor">
+          <div class="mx-auto max-w-6xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
+            <div class="grid gap-8 lg:grid-cols-[1fr_0.92fr]">
+              <div class="rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
+                <p class="text-sm font-semibold text-forest">지속가능한 소비</p>
+                <h2 class="mt-4 text-3xl font-extrabold tracking-[-0.03em] text-text sm:text-4xl">
+                  지속가능한 소비란?
+                </h2>
+                <div class="mt-6 space-y-5 text-base leading-8 text-subtext">
+                  <p>
+                    지속가능한 소비는 단순히 “친환경 제품을 사는 것”이 아닙니다.
+                  </p>
+                  <p>
+                    먼저 필요한지 생각하고,
+                    <br />
+                    이미 가진 것을 더 오래 쓰고,
+                    <br />
+                    정말 필요할 때 더 나은 선택을 하는 것입니다.
+                  </p>
+                  <p>
+                    GreenRocket은 완벽한 정답을 주는 서비스가 아니라,
+                    <br />
+                    소비를 바라보는 방식을 조금 바꾸는 도구입니다.
+                  </p>
+                </div>
+              </div>
+
+              <div class="rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
+                <p class="text-sm font-semibold text-forest">더 생각해볼 이야기</p>
+                <p class="mt-4 text-base leading-8 text-subtext">
+                  소비와 쓰레기의 흐름을 이해하고 싶다면 “The Story of Stuff” 같은 자료를 함께 보면 좋아요.
+                </p>
+                <div class="mt-6 overflow-hidden rounded-3xl border border-line bg-cream">
+                  <!-- 아래 iframe의 src에 원하는 유튜브 링크를 넣어주세요. -->
+                  <iframe
+                    title="추천 영상 자리"
+                    src="about:blank"
+                    class="aspect-video w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
 
@@ -332,7 +422,7 @@
         resultCard.classList.remove("hidden");
 
         productName.textContent = result.productName;
-        analysisBasisNote.textContent = `${result.analysisBasis} · 소비 참고는 안내용입니다.`;
+        analysisBasisNote.textContent = `${result.analysisBasis} · 친환경 점수는 참고용으로 제공됩니다.`;
         ecoRatingText.textContent = String(result.ecoRating);
         reasonText.textContent = result.reason;
         needReflectionText.textContent = result.needReflection;
@@ -441,227 +531,3 @@
     </script>
   </body>
 </html>
-
-===== about.html =====
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GreenRocket - 소개</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              forest: "#2f6b45",
-              mint: "#edf6ef",
-              moss: "#6f8f78",
-              line: "#d9e7dc",
-              text: "#1f2a22",
-              subtext: "#5b6b61",
-              cream: "#f7faf7"
-            },
-            boxShadow: {
-              soft: "0 20px 45px rgba(38, 74, 49, 0.08)"
-            },
-            fontFamily: {
-              sans: [
-                "Pretendard",
-                "Apple SD Gothic Neo",
-                "Noto Sans KR",
-                "sans-serif"
-              ]
-            }
-          }
-        }
-      };
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Noto Sans KR", "Pretendard", sans-serif;
-        background:
-          radial-gradient(circle at top left, rgba(237, 246, 239, 0.9), transparent 32%),
-          linear-gradient(180deg, #f7faf7 0%, #f3f8f4 100%);
-        color: #1f2a22;
-      }
-    </style>
-  </head>
-  <body class="text-text antialiased">
-    <div class="min-h-screen">
-      <header class="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-          <a href="index.html" class="text-xl font-extrabold tracking-[-0.02em] text-forest">GreenRocket</a>
-          <nav class="hidden items-center gap-7 text-sm font-medium text-subtext md:flex">
-            <a class="transition hover:text-forest" href="index.html">도구</a>
-            <a class="transition hover:text-forest" href="about.html">소개</a>
-            <a class="transition hover:text-forest" href="sustainable.html">지속가능한 소비</a>
-          </nav>
-        </div>
-      </header>
-
-      <main>
-        <section>
-          <div class="mx-auto max-w-6xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
-            <div class="max-w-3xl rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
-              <p class="text-sm font-semibold text-forest">About / Philosophy</p>
-              <div class="mt-5 space-y-5 text-base leading-8 text-subtext">
-                <p>저는 13살입니다.</p>
-                <p>
-                  GreenRocket은 단순히 “친환경 제품을 더 사라”고 말하는 사이트가 아닙니다.
-                </p>
-                <p>
-                  가장 좋은 소비는 때로는 사지 않는 것입니다.
-                  <br />
-                  하지만 정말 필요한 소비라면, 조금 더 나은 선택을 할 수 있습니다.
-                </p>
-                <p>
-                  GreenRocket은 사람들이 물건을 사기 전에 한 번 멈추고,
-                  <br />
-                  내가 정말 필요한지, 그리고 더 지속가능한 방법은 없는지 생각하도록 돕기 위해 만들었습니다.
-                </p>
-                <p>
-                  완벽한 소비를 강요하지 않습니다.
-                  <br />
-                  작은 선택이 쌓이면, 소비를 바라보는 방식도 달라질 수 있다고 믿습니다.
-                </p>
-                <p>
-                  🌱 일부 링크는 서비스 유지에 사용될 수 있습니다.
-                  <br />
-                  구매 가격에는 영향이 없습니다.
-                </p>
-              </div>
-              <p class="mt-6 text-sm leading-6 text-subtext/80">
-                쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  </body>
-</html>
-
-===== sustainable.html =====
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GreenRocket - 지속가능한 소비</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              forest: "#2f6b45",
-              mint: "#edf6ef",
-              moss: "#6f8f78",
-              line: "#d9e7dc",
-              text: "#1f2a22",
-              subtext: "#5b6b61",
-              cream: "#f7faf7"
-            },
-            boxShadow: {
-              soft: "0 20px 45px rgba(38, 74, 49, 0.08)"
-            },
-            fontFamily: {
-              sans: [
-                "Pretendard",
-                "Apple SD Gothic Neo",
-                "Noto Sans KR",
-                "sans-serif"
-              ]
-            }
-          }
-        }
-      };
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Noto Sans KR", "Pretendard", sans-serif;
-        background:
-          radial-gradient(circle at top left, rgba(237, 246, 239, 0.9), transparent 32%),
-          linear-gradient(180deg, #f7faf7 0%, #f3f8f4 100%);
-        color: #1f2a22;
-      }
-    </style>
-  </head>
-  <body class="text-text antialiased">
-    <div class="min-h-screen">
-      <header class="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-          <a href="index.html" class="text-xl font-extrabold tracking-[-0.02em] text-forest">GreenRocket</a>
-          <nav class="hidden items-center gap-7 text-sm font-medium text-subtext md:flex">
-            <a class="transition hover:text-forest" href="index.html">도구</a>
-            <a class="transition hover:text-forest" href="about.html">소개</a>
-            <a class="transition hover:text-forest" href="sustainable.html">지속가능한 소비</a>
-          </nav>
-        </div>
-      </header>
-
-      <main>
-        <section>
-          <div class="mx-auto max-w-6xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
-            <div class="grid gap-8 lg:grid-cols-[1fr_0.92fr]">
-              <div class="rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
-                <p class="text-sm font-semibold text-forest">지속가능한 소비</p>
-                <h2 class="mt-4 text-3xl font-extrabold tracking-[-0.03em] text-text sm:text-4xl">
-                  지속가능한 소비란?
-                </h2>
-                <div class="mt-6 space-y-5 text-base leading-8 text-subtext">
-                  <p>
-                    지속가능한 소비는 단순히 “친환경 제품을 사는 것”이 아닙니다.
-                  </p>
-                  <p>
-                    먼저 필요한지 생각하고,
-                    <br />
-                    이미 가진 것을 더 오래 쓰고,
-                    <br />
-                    정말 필요할 때 더 나은 선택을 하는 것입니다.
-                  </p>
-                  <p>
-                    GreenRocket은 완벽한 정답을 주는 서비스가 아니라,
-                    <br />
-                    소비를 바라보는 방식을 조금 바꾸는 도구입니다.
-                  </p>
-                </div>
-              </div>
-
-              <div class="rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
-                <p class="text-sm font-semibold text-forest">더 생각해볼 이야기</p>
-                <p class="mt-4 text-base leading-8 text-subtext">
-                  소비와 쓰레기의 흐름을 이해하고 싶다면 “The Story of Stuff” 같은 자료를 함께 보면 좋아요.
-                </p>
-                <div class="mt-6 overflow-hidden rounded-3xl border border-line bg-cream">
-                  <iframe
-                    title="The Story of Stuff"
-                    src="https://www.youtube.com/embed/9GorqroigqM"
-                    class="aspect-video w-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  </body>
-</html>
-```
