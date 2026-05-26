@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -191,13 +192,7 @@
 
                 <div id="error-state" class="mt-6 hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-4 text-sm leading-6 text-red-600"></div>
 
-                <div id="empty-state" class="mt-6 rounded-[1.4rem] border border-dashed border-line bg-cream px-6 py-10 text-center">
-                  <p class="text-lg font-semibold text-text">필요한 소비인지 먼저 생각해보세요</p>
-                  <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-subtext">
-                    제품을 입력하면 GreenRocket이 꼭 사야 하는지 먼저 떠올려보고,
-                    정말 필요하다면 더 나은 선택이 있는지 함께 살펴봐요.
-                  </p>
-                </div>
+                <div id="empty-state" class="hidden" aria-hidden="true"></div>
               </div>
             </div>
 
@@ -530,7 +525,6 @@
       }
 
       function showError(message) {
-        emptyState.classList.add("hidden");
         resultCard.classList.add("hidden");
         errorState.textContent = message;
         errorState.classList.remove("hidden");
@@ -608,3 +602,4 @@
     </script>
   </body>
 </html>
+```
