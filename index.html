@@ -47,23 +47,77 @@
           linear-gradient(180deg, #f7faf7 0%, #f3f8f4 100%);
         color: #1f2a22;
       }
+
+      .flip-card {
+        perspective: 1200px;
+      }
+
+      .flip-card-inner {
+        position: relative;
+        min-height: 230px;
+        transform-style: preserve-3d;
+        transition: transform 0.55s ease;
+      }
+
+      .flip-card.is-flipped .flip-card-inner,
+      .flip-card:focus-visible .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-face {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+
+      .flip-back {
+        transform: rotateY(180deg);
+      }
     </style>
   </head>
   <body class="text-text antialiased">
     <div class="min-h-screen">
       <header class="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-          <a href="index.html" class="text-xl font-extrabold tracking-[-0.02em] text-forest">GreenRocket</a>
-          <nav class="hidden items-center gap-7 text-sm font-medium text-subtext md:flex">
-            <a class="transition hover:text-forest" href="index.html">GreenRocket</a>
-            <a class="transition hover:text-forest" href="about.html">소개</a>
-            <a class="transition hover:text-forest" href="sustainable.html">지속가능한 소비</a>
-          </nav>
+        <div class="mx-auto max-w-6xl px-5 py-4 sm:px-6 lg:px-8">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <button
+              type="button"
+              data-page="tool"
+              class="page-nav text-left text-xl font-extrabold tracking-[-0.02em] text-forest"
+            >
+              GreenRocket
+            </button>
+
+            <nav class="flex flex-wrap items-center gap-2 sm:gap-3">
+              <button
+                type="button"
+                data-page="tool"
+                class="page-nav rounded-full px-4 py-2 text-sm font-medium text-subtext transition hover:text-forest"
+              >
+                도구
+              </button>
+              <button
+                type="button"
+                data-page="about"
+                class="page-nav rounded-full px-4 py-2 text-sm font-medium text-subtext transition hover:text-forest"
+              >
+                소개
+              </button>
+              <button
+                type="button"
+                data-page="sustainable"
+                class="page-nav rounded-full px-4 py-2 text-sm font-medium text-subtext transition hover:text-forest"
+              >
+                지속가능한 소비
+              </button>
+            </nav>
+          </div>
         </div>
       </header>
 
       <main>
-        <section>
+        <section id="tool-page" class="app-page">
           <div class="mx-auto max-w-6xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
             <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
               <div>
@@ -118,11 +172,17 @@
                   사기 전에, 한 번만 멈춰보세요.
                 </p>
 
-                <div id="loading-state" class="mt-6 hidden rounded-2xl border border-line bg-mint px-4 py-4 text-sm font-medium text-forest">
+                <div
+                  id="loading-state"
+                  class="mt-6 hidden rounded-2xl border border-line bg-mint px-4 py-4 text-sm font-medium text-forest"
+                >
                   제품을 살펴보는 중이에요...
                 </div>
 
-                <div id="error-state" class="mt-6 hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-4 text-sm leading-6 text-red-600"></div>
+                <div
+                  id="error-state"
+                  class="mt-6 hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-4 text-sm leading-6 text-red-600"
+                ></div>
 
                 <div id="empty-state" class="hidden" aria-hidden="true"></div>
               </div>
@@ -197,6 +257,370 @@
             </article>
           </div>
         </section>
+
+        <section id="about-page" class="app-page hidden">
+          <div class="mx-auto max-w-6xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
+            <div class="max-w-3xl rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
+              <p class="text-sm font-semibold text-forest">About / Philosophy</p>
+              <div class="mt-5 space-y-5 text-base leading-8 text-subtext">
+                <p>안녕하세요, 저는 13살 개발자입니다.</p>
+                <p>
+                  어느 순간부터
+                  <br />
+                  필요하지도 않은 물건을
+                  <br />
+                  너무 쉽게 사고,
+                  <br />
+                  너무 빠르게 버리는 문화가 당연해진 것 같았습니다.
+                </p>
+                <p>
+                  배송은 점점 빨라졌고,
+                  <br />
+                  충동적인 소비도 점점 자연스러워졌어요.
+                </p>
+                <p>
+                  하지만 우리는
+                  <br />
+                  그 소비가 어디로 가는지,
+                  <br />
+                  무엇을 남기는지는
+                  <br />
+                  점점 생각하지 않게 된 것 같았습니다.
+                </p>
+                <p>저는 그게 이상했어요.</p>
+                <p>
+                  우리가 사는 방식은
+                  <br />
+                  결국 우리가 살아갈 미래도 함께 만든다고 생각했습니다.
+                </p>
+                <p>그래서 GreenRocket을 만들었어요.</p>
+                <p>
+                  사람들이 물건을 살 때
+                  <br />
+                  단순히 가격이나 충동만이 아니라,
+                  <br />
+                  이 소비가 어떤 흔적을 남기는지도
+                  <br />
+                  한 번쯤은 생각해봤으면 좋겠습니다.
+                </p>
+                <p>
+                  한 번 의식하기 시작하면,
+                  <br />
+                  전처럼 소비하기는 어려워집니다.
+                </p>
+              </div>
+              <p class="mt-6 text-sm leading-6 text-subtext/80">
+                쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="sustainable-page" class="app-page hidden">
+          <div class="mx-auto max-w-6xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
+            <div class="rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
+              <p class="text-sm font-semibold text-forest">지속가능한 소비</p>
+              <h1 class="mt-4 text-3xl font-extrabold tracking-[-0.03em] text-text sm:text-5xl">
+                왜 우리는 이렇게 많이 사게 되었을까?
+              </h1>
+              <div class="mt-6 max-w-3xl space-y-4 text-base leading-8 text-subtext">
+                <p>
+                  지속가능한 소비는 단순히 “친환경 제품을 사는 것”이 아닙니다.
+                </p>
+                <p>
+                  우리가 왜 계속 사고, 쓰고, 버리게 되는지 이해하는 것에서 시작됩니다.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <p class="text-sm font-semibold text-forest">카드를 눌러 답을 확인해보세요.</p>
+              <div class="mt-4 grid gap-4 md:grid-cols-2">
+                <button type="button" class="flip-card text-left">
+                  <div class="flip-card-inner">
+                    <div class="flip-face rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Question</p>
+                      <p class="mt-5 text-lg font-bold leading-8 tracking-[-0.02em] text-text">
+                        왜 우리는 필요하지 않은 물건도 계속 사게 될까?
+                      </p>
+                    </div>
+                    <div class="flip-face flip-back rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Answer</p>
+                      <p class="mt-4 text-sm leading-7 text-subtext">
+                        광고, 빠른 배송, 그리고 끊임없이 보이는 새로운 제품들은
+                        소비를 점점 더 자연스러운 행동처럼 느끼게 만듭니다.
+                      </p>
+                      <p class="mt-3 text-sm leading-7 text-subtext">
+                        필요보다도,
+                        <br />
+                        지루함이나 습관 때문에 소비하는 경우도 많아졌습니다.
+                      </p>
+                    </div>
+                  </div>
+                </button>
+
+                <button type="button" class="flip-card text-left">
+                  <div class="flip-card-inner">
+                    <div class="flip-face rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Question</p>
+                      <p class="mt-5 text-lg font-bold leading-8 tracking-[-0.02em] text-text">
+                        왜 새 제품은 계속 필요해 보일까?
+                      </p>
+                    </div>
+                    <div class="flip-face flip-back rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Answer</p>
+                      <p class="mt-4 text-sm leading-7 text-subtext">
+                        많은 제품들은 오래 만족하기보다,
+                        <br />
+                        계속 새로운 것을 원하게 만드는 방식으로 판매됩니다.
+                      </p>
+                      <p class="mt-3 text-sm leading-7 text-subtext">
+                        아직 사용할 수 있어도
+                        <br />
+                        ‘뒤처진 것처럼’ 느끼게 되는 이유입니다.
+                      </p>
+                    </div>
+                  </div>
+                </button>
+
+                <button type="button" class="flip-card text-left">
+                  <div class="flip-card-inner">
+                    <div class="flip-face rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Question</p>
+                      <p class="mt-5 text-lg font-bold leading-8 tracking-[-0.02em] text-text">
+                        왜 멀쩡한 물건도 금방 버리게 될까?
+                      </p>
+                    </div>
+                    <div class="flip-face flip-back rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Answer</p>
+                      <p class="mt-4 text-sm leading-7 text-subtext">
+                        수리보다 교체가 더 익숙한 문화 속에서,
+                        <br />
+                        우리는 점점 더 빠르게 소비하고 버리는 방식에 익숙해지고 있습니다.
+                      </p>
+                    </div>
+                  </div>
+                </button>
+
+                <button type="button" class="flip-card text-left">
+                  <div class="flip-card-inner">
+                    <div class="flip-face rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Question</p>
+                      <p class="mt-5 text-lg font-bold leading-8 tracking-[-0.02em] text-text">
+                        왜 소비의 끝은 잘 보이지 않을까?
+                      </p>
+                    </div>
+                    <div class="flip-face flip-back rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Answer</p>
+                      <p class="mt-4 text-sm leading-7 text-subtext">
+                        우리는 물건을 구매하는 순간은 쉽게 보지만,
+                        <br />
+                        버려진 이후 어디로 가는지는 거의 보지 못합니다.
+                      </p>
+                      <p class="mt-3 text-sm leading-7 text-subtext">
+                        그래서 소비는 실제보다 훨씬 가볍게 느껴지기도 합니다.
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-10">
+              <div class="mx-auto flex max-w-4xl flex-col gap-5">
+                <article class="rounded-[1.75rem] border border-line bg-white p-7 shadow-soft">
+                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Perspective 01</p>
+                  <p class="mt-2 text-xl font-extrabold leading-9 tracking-[-0.03em] text-text">
+                    계속 소비하게 만드는 시스템 안에서는,
+                    <br />
+                    ‘충분함’을 느끼기가 점점 어려워집니다.
+                  </p>
+                  <div class="mt-5 space-y-4 text-base leading-8 text-subtext">
+                    <p>
+                      광고와 소비 문화는 계속해서 “지금 가진 것으로는 부족하다”는 감각을 만들어냅니다.
+                    </p>
+                    <p>
+                      이미 충분히 가지고 있어도,
+                      <br />
+                      새로운 제품이 더 필요하다고 느끼게 되는 이유입니다.
+                    </p>
+                    <p>
+                      경제는 사람들이 오래 만족하기보다,
+                      <br />
+                      계속 새로운 것을 원하고 계속 소비하도록 움직입니다.
+                    </p>
+                  </div>
+                  <div class="mt-6 rounded-2xl bg-mint p-5">
+                    <p class="text-sm font-semibold text-forest">Fact</p>
+                    <p class="mt-2 text-sm leading-7 text-subtext">
+                      미국 어린이는 18살이 될 때까지 약 20만 개 이상의 광고를 보며 자란다고 합니다.
+                    </p>
+                  </div>
+                </article>
+
+                <article class="rounded-[1.75rem] border border-line bg-white p-7 shadow-soft">
+                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Perspective 02</p>
+                  <p class="mt-2 text-xl font-extrabold leading-9 tracking-[-0.03em] text-text">
+                    많은 소비는 선택처럼 보이지만,
+                    <br />
+                    사실은 익숙해진 시스템일지도 모릅니다.
+                  </p>
+                  <div class="mt-5 space-y-4 text-base leading-8 text-subtext">
+                    <p>
+                      빠른 배송, 반복되는 광고,
+                      <br />
+                      끊임없이 나오는 신제품은
+                      <br />
+                      계속 소비하는 삶을 아주 자연스럽게 만듭니다.
+                    </p>
+                    <p>
+                      사람들은 더 많이 일하고,
+                      <br />
+                      지친 상태로 집에 돌아옵니다.
+                    </p>
+                    <p>
+                      그리고 쉬기 위해 보는 미디어와 광고는
+                      <br />
+                      계속해서 지금 가진 것으로는 부족하다고 말합니다.
+                    </p>
+                    <p>
+                      그래서 사람들은 다시 새로운 물건을 사고,
+                      <br />
+                      그 소비를 유지하기 위해 다시 더 많이 일합니다.
+                    </p>
+                    <p>
+                      우리는 소비를 스스로 선택한다고 느끼지만,
+                      <br />
+                      사실은 소비하지 않는 것이 더 어려운 환경 속에서 살아가고 있을지도 모릅니다.
+                    </p>
+                    <p>
+                      계속 사고,
+                      <br />
+                      쓰고,
+                      <br />
+                      버리고,
+                      <br />
+                      다시 사는 흐름 자체가
+                      <br />
+                      너무 자연스러운 문화가 되어버린 것입니다.
+                    </p>
+                  </div>
+                  <div class="mt-6 rounded-2xl bg-mint p-5">
+                    <p class="text-sm font-semibold text-forest">Fact</p>
+                    <p class="mt-2 text-sm leading-7 text-subtext">
+                      1955년, 경제 분석가 Victor Lebow는
+                      <br />
+                      “우리의 경제는 소비를 삶의 방식으로 만들어야 한다.
+                      <br />
+                      물건은 점점 더 빠르게 소비되고,
+                      <br />
+                      교체되고,
+                      <br />
+                      버려져야 한다”
+                      <br />
+                      고 말했습니다.
+                    </p>
+                  </div>
+                </article>
+
+                <article class="rounded-[1.75rem] border border-line bg-white p-7 shadow-soft">
+                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Perspective 03</p>
+                  <p class="mt-2 text-xl font-extrabold leading-9 tracking-[-0.03em] text-text">
+                    많은 물건들은 오래 쓰기 위해서보다,
+                    <br />
+                    계속 다시 사게 만들기 위해 만들어집니다.
+                  </p>
+                  <div class="mt-5 space-y-4 text-base leading-8 text-subtext">
+                    <p>
+                      어떤 제품은 오래 사용하기 어렵게 만들어지고,
+                      <br />
+                      어떤 제품은 아직 사용할 수 있어도
+                      <br />
+                      ‘구식처럼 느껴지게’ 만들어집니다.
+                    </p>
+                    <p>
+                      그래야 더 빨리 새 제품을 사고,
+                      <br />
+                      더 많은 소비가 반복되기 때문입니다.
+                    </p>
+                  </div>
+                  <div class="mt-6 rounded-2xl bg-mint p-5">
+                    <p class="text-sm font-semibold text-forest">Fact</p>
+                    <p class="mt-2 text-sm leading-7 text-subtext">
+                      애플은 2020년 구형 아이폰 성능 저하 문제와 관련해 미국에서 최대 5억 달러 규모의 합의금을 지불하기로 했습니다.
+                    </p>
+                  </div>
+                </article>
+
+                <article class="rounded-[1.75rem] border border-line bg-white p-7 shadow-soft">
+                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Perspective 04</p>
+                  <p class="mt-2 text-xl font-extrabold leading-9 tracking-[-0.03em] text-text">
+                    우리는 소비의 시작은 보지만,
+                    <br />
+                    끝은 거의 보지 못합니다.
+                  </p>
+                  <div class="mt-5 space-y-4 text-base leading-8 text-subtext">
+                    <p>
+                      우리는 택배가 도착하는 순간은 쉽게 보지만,
+                      <br />
+                      버려진 이후의 과정은 거의 보지 못합니다.
+                    </p>
+                    <p>
+                      하지만 제품은 만들어지는 순간부터
+                      <br />
+                      자원과 에너지를 사용하고,
+                      <br />
+                      버려진 이후에도 오랫동안 흔적을 남깁니다.
+                    </p>
+                    <p>
+                      보이지 않는다고 해서,
+                      <br />
+                      없어지는 것은 아닙니다.
+                    </p>
+                  </div>
+                  <div class="mt-6 rounded-2xl bg-mint p-5">
+                    <p class="text-sm font-semibold text-forest">Fact</p>
+                    <p class="mt-2 text-sm leading-7 text-subtext">
+                      플라스틱 컵은 몇 분 사용되기도 하지만,
+                      <br />
+                      완전히 분해되는 데는 최대 500년 이상 걸릴 수 있습니다.
+                    </p>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="mt-10 rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
+              <p class="text-sm font-semibold text-forest">더 깊게 보고 싶다면</p>
+              <div class="mt-4 max-w-3xl space-y-4 text-base leading-8 text-subtext">
+                <p>
+                  이 영상은 제가 소비와 쓰레기를 바라보는 방식을 바꾸게 된 자료입니다.
+                </p>
+                <p>
+                  길지만,
+                  <br />
+                  왜 우리는 계속 소비하게 되는지,
+                  <br />
+                  왜 물건이 빠르게 버려지는지,
+                  <br />
+                  그리고 왜 그 과정이 잘 보이지 않는지 이해하는 데 도움이 됩니다.
+                </p>
+              </div>
+              <div class="mt-6 overflow-hidden rounded-3xl border border-line bg-cream">
+                <iframe
+                  title="The Story of Stuff"
+                  src="https://www.youtube.com/embed/9GorqroigqM"
+                  class="aspect-video w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <p class="mt-4 text-sm leading-6 text-subtext">
+                Video: The Story of Stuff Project
+              </p>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
 
@@ -234,6 +658,14 @@
       const impactOfSwitch = document.getElementById("impact-of-switch");
       const productLink = document.getElementById("product-link");
 
+      const pageSections = {
+        tool: document.getElementById("tool-page"),
+        about: document.getElementById("about-page"),
+        sustainable: document.getElementById("sustainable-page")
+      };
+      const pageButtons = document.querySelectorAll(".page-nav");
+      const flipCards = document.querySelectorAll(".flip-card");
+
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
@@ -256,6 +688,42 @@
           setLoading(false);
         }
       });
+
+      pageButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetPage = button.dataset.page;
+          showPage(targetPage);
+        });
+      });
+
+      flipCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          card.classList.toggle("is-flipped");
+        });
+
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            card.classList.toggle("is-flipped");
+          }
+        });
+      });
+
+      function showPage(pageName) {
+        Object.entries(pageSections).forEach(([key, section]) => {
+          section.classList.toggle("hidden", key !== pageName);
+        });
+
+        pageButtons.forEach((button) => {
+          const isActive = button.dataset.page === pageName;
+          button.classList.toggle("bg-mint", isActive);
+          button.classList.toggle("text-forest", isActive);
+          button.classList.toggle("text-subtext", !isActive);
+          button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
 
       async function analyzeProduct(userInput) {
         const response = await fetch("/api/analyze", {
@@ -310,7 +778,7 @@
             "작은 차이라도 반복 구매가 쌓이면 전체 소비 습관에는 꽤 큰 차이를 만들 수 있어요.",
           analysisBasis:
             parsed.analysis_basis ||
-            (parsed.specificity === "specific_product" ? "입력한 제품 기준" : "일반적인 제품 기준"),
+            (parsed.specificity === "specific_product" ? "입력하신 제품 기준" : "일반적인 제품 기준"),
           productUrl: `https://www.coupang.com/np/search?q=${encodeURIComponent(searchKeyword)}`
         };
 
@@ -363,6 +831,7 @@
         errorState.textContent = "";
         resultCard.classList.add("hidden");
         alternativeSection.classList.remove("hidden");
+        productLink.classList.remove("hidden");
       }
 
       function setLoading(isLoading) {
@@ -410,14 +879,7 @@
           .join(" ")
           .toLowerCase();
 
-        const reuseSignals = [
-          "리필",
-          "수리",
-          "재사용",
-          "refill",
-          "repair",
-          "reuse"
-        ];
+        const reuseSignals = ["리필", "수리", "재사용", "refill", "repair", "reuse"];
         const dontBuySignals = [
           "사지 않는",
           "구매하지 않는",
@@ -499,552 +961,8 @@
 
         return curatedProducts.shampoo.refill;
       }
-    </script>
-  </body>
-</html>
 
-===== about.html =====
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GreenRocket - 소개</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              forest: "#2f6b45",
-              mint: "#edf6ef",
-              moss: "#6f8f78",
-              line: "#d9e7dc",
-              text: "#1f2a22",
-              subtext: "#5b6b61",
-              cream: "#f7faf7"
-            },
-            boxShadow: {
-              soft: "0 20px 45px rgba(38, 74, 49, 0.08)"
-            },
-            fontFamily: {
-              sans: [
-                "Pretendard",
-                "Apple SD Gothic Neo",
-                "Noto Sans KR",
-                "sans-serif"
-              ]
-            }
-          }
-        }
-      };
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Noto Sans KR", "Pretendard", sans-serif;
-        background:
-          radial-gradient(circle at top left, rgba(237, 246, 239, 0.9), transparent 32%),
-          linear-gradient(180deg, #f7faf7 0%, #f3f8f4 100%);
-        color: #1f2a22;
-      }
-    </style>
-  </head>
-  <body class="text-text antialiased">
-    <div class="min-h-screen">
-      <header class="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-          <a href="index.html" class="text-xl font-extrabold tracking-[-0.02em] text-forest">GreenRocket</a>
-          <nav class="hidden items-center gap-7 text-sm font-medium text-subtext md:flex">
-            <a class="transition hover:text-forest" href="index.html">GreenRocket</a>
-            <a class="transition hover:text-forest" href="about.html">소개</a>
-            <a class="transition hover:text-forest" href="sustainable.html">지속가능한 소비</a>
-          </nav>
-        </div>
-      </header>
-
-      <main>
-        <section>
-          <div class="mx-auto max-w-6xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
-            <div class="max-w-3xl rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
-              <p class="text-sm font-semibold text-forest">About / Philosophy</p>
-              <div class="mt-5 space-y-5 text-base leading-8 text-subtext">
-                <p>안녕하세요, 저는 13살 개발자입니다.</p>
-                <p>
-                  어느 순간부터
-                  <br />
-                  필요하지도 않은 물건을
-                  <br />
-                  너무 쉽게 사고,
-                  <br />
-                  너무 빠르게 버리는 문화가 당연해진 것 같았습니다.
-                </p>
-                <p>
-                  배송은 점점 빨라졌고,
-                  <br />
-                  충동적인 소비도 점점 자연스러워졌어요.
-                </p>
-                <p>
-                  하지만 우리는
-                  <br />
-                  그 소비가 어디로 가는지,
-                  <br />
-                  무엇을 남기는지는
-                  <br />
-                  점점 생각하지 않게 된 것 같았습니다.
-                </p>
-                <p>저는 그게 이상했어요.</p>
-                <p>
-                  우리가 사는 방식은
-                  <br />
-                  결국 우리가 살아갈 미래도 함께 만든다고 생각했습니다.
-                </p>
-                <p>그래서 GreenRocket을 만들었어요.</p>
-                <p>
-                  사람들이 물건을 살 때
-                  <br />
-                  단순히 가격이나 충동만이 아니라,
-                  <br />
-                  이 소비가 어떤 흔적을 남기는지도
-                  <br />
-                  한 번쯤은 생각해봤으면 좋겠습니다.
-                </p>
-                <p>
-                  한 번 의식하기 시작하면,
-                  <br />
-                  전처럼 소비하기는 어려워집니다.
-                </p>
-              </div>
-              <p class="mt-6 text-sm leading-6 text-subtext/80">
-                쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  </body>
-</html>
-
-===== sustainable.html =====
-<!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GreenRocket - 지속가능한 소비</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              forest: "#2f6b45",
-              mint: "#edf6ef",
-              moss: "#6f8f78",
-              line: "#d9e7dc",
-              text: "#1f2a22",
-              subtext: "#5b6b61",
-              cream: "#f7faf7"
-            },
-            boxShadow: {
-              soft: "0 20px 45px rgba(38, 74, 49, 0.08)"
-            },
-            fontFamily: {
-              sans: [
-                "Pretendard",
-                "Apple SD Gothic Neo",
-                "Noto Sans KR",
-                "sans-serif"
-              ]
-            }
-          }
-        }
-      };
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Noto Sans KR", "Pretendard", sans-serif;
-        background:
-          radial-gradient(circle at top left, rgba(237, 246, 239, 0.9), transparent 32%),
-          linear-gradient(180deg, #f7faf7 0%, #f3f8f4 100%);
-        color: #1f2a22;
-      }
-
-      .flip-card {
-        perspective: 1200px;
-      }
-
-      .flip-card-inner {
-        position: relative;
-        min-height: 230px;
-        transform-style: preserve-3d;
-        transition: transform 0.55s ease;
-      }
-
-      .flip-card.is-flipped .flip-card-inner,
-      .flip-card:focus-within .flip-card-inner {
-        transform: rotateY(180deg);
-      }
-
-      .flip-face {
-        position: absolute;
-        inset: 0;
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-      }
-
-      .flip-back {
-        transform: rotateY(180deg);
-      }
-    </style>
-  </head>
-  <body class="text-text antialiased">
-    <div class="min-h-screen">
-      <header class="sticky top-0 z-50 border-b border-line/80 bg-white/90 backdrop-blur">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-          <a href="index.html" class="text-xl font-extrabold tracking-[-0.02em] text-forest">GreenRocket</a>
-          <nav class="hidden items-center gap-7 text-sm font-medium text-subtext md:flex">
-            <a class="transition hover:text-forest" href="index.html">GreenRocket</a>
-            <a class="transition hover:text-forest" href="about.html">소개</a>
-            <a class="transition hover:text-forest" href="sustainable.html">지속가능한 소비</a>
-          </nav>
-        </div>
-      </header>
-
-      <main>
-        <section>
-          <div class="mx-auto max-w-6xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
-            <div class="rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
-              <p class="text-sm font-semibold text-forest">지속가능한 소비</p>
-              <h1 class="mt-4 text-3xl font-extrabold tracking-[-0.03em] text-text sm:text-5xl">
-                왜 우리는 이렇게 많이 사게 되었을까?
-              </h1>
-              <div class="mt-6 max-w-3xl space-y-4 text-base leading-8 text-subtext">
-                <p>
-                  지속가능한 소비는 단순히 “친환경 제품을 사는 것”이 아닙니다.
-                  <br />
-                  우리가 왜 계속 사고, 쓰고, 버리게 되는지 이해하는 것에서 시작됩니다.
-                </p>
-              </div>
-            </div>
-
-            <div class="mt-8">
-              <p class="text-sm font-semibold text-forest">카드를 눌러 답을 확인해보세요.</p>
-              <div class="mt-4 grid gap-4 md:grid-cols-2">
-                <button type="button" class="flip-card group text-left">
-                  <div class="flip-card-inner">
-                    <div class="flip-face rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Question</p>
-                      <p class="mt-5 text-lg font-bold leading-8 tracking-[-0.02em] text-text">
-                        왜 우리는 필요하지 않은 물건도 계속 사게 될까?
-                      </p>
-                    </div>
-                    <div class="flip-face flip-back rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Answer</p>
-                      <p class="mt-4 text-sm leading-7 text-subtext">
-                        광고, 빠른 배송, 그리고 끊임없이 보이는 새로운 제품들은
-                        소비를 점점 더 자연스러운 행동처럼 느끼게 만듭니다.
-                      </p>
-                      <p class="mt-3 text-sm leading-7 text-subtext">
-                        필요보다도,
-                        <br />
-                        지루함이나 습관 때문에 소비하는 경우도 많아졌습니다.
-                      </p>
-                    </div>
-                  </div>
-                </button>
-
-                <button type="button" class="flip-card group text-left">
-                  <div class="flip-card-inner">
-                    <div class="flip-face rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Question</p>
-                      <p class="mt-5 text-lg font-bold leading-8 tracking-[-0.02em] text-text">
-                        왜 새 제품은 계속 필요해 보일까?
-                      </p>
-                    </div>
-                    <div class="flip-face flip-back rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Answer</p>
-                      <p class="mt-4 text-sm leading-7 text-subtext">
-                        많은 제품들은 오래 만족하기보다,
-                        <br />
-                        계속 새로운 것을 원하게 만드는 방식으로 판매됩니다.
-                      </p>
-                      <p class="mt-3 text-sm leading-7 text-subtext">
-                        아직 사용할 수 있어도
-                        <br />
-                        ‘뒤처진 것처럼’ 느끼게 되는 이유입니다.
-                      </p>
-                    </div>
-                  </div>
-                </button>
-
-                <button type="button" class="flip-card group text-left">
-                  <div class="flip-card-inner">
-                    <div class="flip-face rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Question</p>
-                      <p class="mt-5 text-lg font-bold leading-8 tracking-[-0.02em] text-text">
-                        왜 멀쩡한 물건도 금방 버리게 될까?
-                      </p>
-                    </div>
-                    <div class="flip-face flip-back rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Answer</p>
-                      <p class="mt-4 text-sm leading-7 text-subtext">
-                        수리보다 교체가 더 익숙한 문화 속에서,
-                        <br />
-                        우리는 점점 더 빠르게 소비하고 버리는 방식에 익숙해지고 있습니다.
-                      </p>
-                    </div>
-                  </div>
-                </button>
-
-                <button type="button" class="flip-card group text-left">
-                  <div class="flip-card-inner">
-                    <div class="flip-face rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Question</p>
-                      <p class="mt-5 text-lg font-bold leading-8 tracking-[-0.02em] text-text">
-                        왜 소비의 끝은 잘 보이지 않을까?
-                      </p>
-                    </div>
-                    <div class="flip-face flip-back rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Answer</p>
-                      <p class="mt-4 text-sm leading-7 text-subtext">
-                        우리는 물건을 구매하는 순간은 쉽게 보지만,
-                        <br />
-                        버려진 이후 어디로 가는지는 거의 보지 못합니다.
-                      </p>
-                      <p class="mt-3 text-sm leading-7 text-subtext">
-                        그래서 소비는 실제보다 훨씬 가볍게 느껴지기도 합니다.
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              </div>
-            </div>
-
-            <div class="mt-10">
-              <div class="mx-auto mt-4 flex max-w-4xl flex-col gap-5">
-                <article class="rounded-[1.75rem] border border-line bg-white p-7 shadow-soft">
-                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Perspective 01</p>
-                  <p class="text-xl font-extrabold leading-9 tracking-[-0.03em] text-text">
-                    계속 소비하게 만드는 시스템 안에서는,
-                    <br />
-                    ‘충분함’을 느끼기가 점점 어려워집니다.
-                  </p>
-                  <div class="mt-5 space-y-4 text-base leading-8 text-subtext">
-                    <p>
-                      광고와 소비 문화는 계속해서 “지금 가진 것으로는 부족하다”는 감각을 만들어냅니다.
-                    </p>
-                    <p>
-                      이미 충분히 가지고 있어도,
-                      <br />
-                      새로운 제품이 더 필요하다고 느끼게 되는 이유입니다.
-                    </p>
-                    <p>
-                      경제는 사람들이 오래 만족하기보다,
-                      <br />
-                      계속 새로운 것을 원하고 계속 소비하도록 움직입니다.
-                    </p>
-                  </div>
-                  <div class="mt-6 rounded-2xl bg-mint p-5">
-                    <p class="text-sm font-semibold text-forest">Fact</p>
-                    <p class="mt-2 text-sm leading-7 text-subtext">
-                      미국 어린이는 18살이 될 때까지 약 20만 개 이상의 광고를 보며 자란다고 합니다.
-                    </p>
-                  </div>
-                </article>
-
-                <article class="rounded-[1.75rem] border border-line bg-white p-7 shadow-soft">
-                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Perspective 02</p>
-                  <p class="text-xl font-extrabold leading-9 tracking-[-0.03em] text-text">
-                    많은 소비는 선택처럼 보이지만,
-                    <br />
-                    사실은 익숙해진 시스템일지도 모릅니다.
-                  </p>
-                  <div class="mt-5 space-y-4 text-base leading-8 text-subtext">
-                    <p>
-                      빠른 배송, 반복되는 광고,
-                      <br />
-                      끊임없이 나오는 신제품은
-                      <br />
-                      계속 소비하는 삶을 아주 자연스럽게 만듭니다.
-                    </p>
-                    <p>
-                      사람들은 더 많이 일하고,
-                      <br />
-                      지친 상태로 집에 돌아옵니다.
-                    </p>
-                    <p>
-                      그리고 쉬기 위해 보는 미디어와 광고는
-                      <br />
-                      계속해서 지금 가진 것으로는 부족하다고 말합니다.
-                    </p>
-                    <p>
-                      그래서 사람들은 다시 새로운 물건을 사고,
-                      <br />
-                      그 소비를 유지하기 위해 다시 더 많이 일합니다.
-                    </p>
-                    <p>
-                      우리는 소비를 스스로 선택한다고 느끼지만,
-                      <br />
-                      사실은 소비하지 않는 것이 더 어려운 환경 속에서 살아가고 있을지도 모릅니다.
-                    </p>
-                    <p>
-                      계속 사고,
-                      <br />
-                      쓰고,
-                      <br />
-                      버리고,
-                      <br />
-                      다시 사는 흐름 자체가
-                      <br />
-                      너무 자연스러운 문화가 되어버린 것입니다.
-                    </p>
-                  </div>
-                  <div class="mt-6 rounded-2xl bg-mint p-5">
-                    <p class="text-sm font-semibold text-forest">Fact</p>
-                    <p class="mt-2 text-sm leading-7 text-subtext">
-                      1955년, 경제 분석가 Victor Lebow는
-                      <br />
-                      “우리의 경제는 소비를 삶의 방식으로 만들어야 한다.
-                      <br />
-                      물건은 점점 더 빠르게 소비되고,
-                      <br />
-                      교체되고,
-                      <br />
-                      버려져야 한다”
-                      <br />
-                      고 말했습니다.
-                    </p>
-                  </div>
-                </article>
-
-                <article class="rounded-[1.75rem] border border-line bg-white p-7 shadow-soft">
-                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Perspective 03</p>
-                  <p class="text-xl font-extrabold leading-9 tracking-[-0.03em] text-text">
-                    많은 물건들은 오래 쓰기 위해서보다,
-                    <br />
-                    계속 다시 사게 만들기 위해 만들어집니다.
-                  </p>
-                  <div class="mt-5 space-y-4 text-base leading-8 text-subtext">
-                    <p>
-                      어떤 제품은 오래 사용하기 어렵게 만들어지고,
-                      <br />
-                      어떤 제품은 아직 사용할 수 있어도
-                      <br />
-                      ‘구식처럼 느껴지게’ 만들어집니다.
-                    </p>
-                    <p>
-                      그래야 더 빨리 새 제품을 사고,
-                      <br />
-                      더 많은 소비가 반복되기 때문입니다.
-                    </p>
-                  </div>
-                  <div class="mt-6 rounded-2xl bg-mint p-5">
-                    <p class="text-sm font-semibold text-forest">Fact</p>
-                    <p class="mt-2 text-sm leading-7 text-subtext">
-                      애플은 2020년 구형 아이폰 성능 저하 문제와 관련해 미국에서 최대 5억 달러 규모의 합의금을 지불하기로 했습니다.
-                    </p>
-                  </div>
-                </article>
-
-                <article class="rounded-[1.75rem] border border-line bg-white p-7 shadow-soft">
-                  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-moss">Perspective 04</p>
-                  <p class="text-xl font-extrabold leading-9 tracking-[-0.03em] text-text">
-                    우리는 소비의 시작은 보지만,
-                    <br />
-                    끝은 거의 보지 못합니다.
-                  </p>
-                  <div class="mt-5 space-y-4 text-base leading-8 text-subtext">
-                    <p>
-                      우리는 택배가 도착하는 순간은 쉽게 보지만,
-                      <br />
-                      버려진 이후의 과정은 거의 보지 못합니다.
-                    </p>
-                    <p>
-                      하지만 제품은 만들어지는 순간부터
-                      <br />
-                      자원과 에너지를 사용하고,
-                      <br />
-                      버려진 이후에도 오랫동안 흔적을 남깁니다.
-                    </p>
-                    <p>
-                      보이지 않는다고 해서,
-                      <br />
-                      없어지는 것은 아닙니다.
-                    </p>
-                  </div>
-                  <div class="mt-6 rounded-2xl bg-mint p-5">
-                    <p class="text-sm font-semibold text-forest">Fact</p>
-                    <p class="mt-2 text-sm leading-7 text-subtext">
-                      플라스틱 컵은 몇 분 사용되기도 하지만,
-                      <br />
-                      완전히 분해되는 데는 최대 500년 이상 걸릴 수 있습니다.
-                    </p>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <div class="mt-10 rounded-[2rem] border border-line bg-white p-7 shadow-soft sm:p-10">
-              <p class="text-sm font-semibold text-forest">더 깊게 보고 싶다면</p>
-              <div class="mt-4 max-w-3xl space-y-4 text-base leading-8 text-subtext">
-                <p>
-                  이 영상은 제가 소비와 쓰레기를 바라보는 방식을 바꾸게 된 자료입니다.
-                </p>
-                <p>
-                  길지만,
-                  <br />
-                  왜 우리는 계속 소비하게 되는지,
-                  <br />
-                  왜 물건이 빠르게 버려지는지,
-                  <br />
-                  그리고 왜 그 과정이 잘 보이지 않는지 이해하는 데 도움이 됩니다.
-                </p>
-              </div>
-              <div class="mt-6 overflow-hidden rounded-3xl border border-line bg-cream">
-                <iframe
-                  title="The Story of Stuff"
-                  src="https://www.youtube.com/embed/9GorqroigqM"
-                  class="aspect-video w-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </div>
-              <p class="mt-4 text-sm leading-6 text-subtext">
-                Video: The Story of Stuff Project
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-    <script>
-      const flipCards = document.querySelectorAll(".flip-card");
-
-      flipCards.forEach((card) => {
-        card.addEventListener("click", () => {
-          card.classList.toggle("is-flipped");
-        });
-
-        card.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            card.classList.toggle("is-flipped");
-          }
-        });
-      });
+      showPage("tool");
     </script>
   </body>
 </html>
