@@ -60,6 +60,12 @@ const SYSTEM_PROMPT =
   "- habitual consumption\n" +
   "- hidden waste after disposal\n" +
   "- Do not default to disposal unless it is genuinely one of the strongest insights.\n\n" +
+  "Waste-after-disposal rule:\n" +
+  "- For waste-heavy products, explain what happens after the product is thrown away.\n" +
+  "- Put this in system_insight, not as a random side note.\n" +
+  "- Use the contrast: used briefly -> remains much longer.\n" +
+  "- Examples include wet wipes, plastic cups, bottled water, disposable packaging, tissues, paper towels, batteries, cheap accessories, some cosmetics packaging, and some electronics.\n" +
+  "- But do not force landfill talk into every answer if another hidden pattern is stronger.\n\n" +
   "If the product is unfamiliar, reason dynamically:\n" +
   "- Is it single-use?\n" +
   "- Is it frequently replaced?\n" +
@@ -120,6 +126,7 @@ const SYSTEM_PROMPT =
   "Target explanation level example for 물티슈:\n" +
   "- why should explain that wipes get pulled out again and again for tiny messes because they are too easy.\n" +
   "- system_insight should explain that this product represents a culture where even tiny inconveniences are solved by disposable purchases.\n" +
+  "- system_insight should also mention that although wipes are used for only a moment, they can remain much longer after disposal when plastic fibers are involved.\n" +
   "- action_step should say to use cloth, towel, or reusable wipes first when possible.\n" +
   "- alternative should say that if wipes are still genuinely needed, search toward 생분해성 물티슈.\n\n" +
   "Final self-check before answering:\n" +
@@ -207,6 +214,8 @@ async function analyzeWithModel(apiKey, product, model) {
             "Explain the problem so the user can picture it in daily life.\n" +
             "Do not stop at a punchy line. Add enough explanation to make it understandable.\n" +
             "If the product is unfamiliar, reason from the strongest consumption pattern instead of giving generic eco advice.\n" +
+            "If disposal is a major part of the issue, explain what happens after the product is thrown away in system_insight.\n" +
+            "Use the contrast: used briefly, remains much longer.\n" +
             "If you suggest an alternative, make it a search direction, not a specific product.\n\n" +
             "{\n" +
             '"product_name":"입력값을 바탕으로 해석한 제품명",\n' +
@@ -540,6 +549,14 @@ function inferDynamicPattern(product, category, outcomeType) {
     return "single_use_repeat";
   }
 
+  if (
+    /(배터리|건전지|battery|batteries|plastic cup|paper cup|disposable cup|일회용 컵|플라스틱 컵|종이컵|포장|패키징|packaging|package|wrapper|wrap|휴지|티슈|paper towel|키친타월|냅킨|napkin|저가 액세서리|cheap accessory|cheap accessories|cheap jewelry|패스트 주얼리|악세서리|액세서리)/.test(
+      text
+    )
+  ) {
+    return "waste_after_disposal";
+  }
+
   if (/(티슈|wipe|wipes|cup|straw|bag|wrap|foil|mask|glove|diaper|pad|컵|빨대|봉투|랩|호일|면봉|마스크|장갑|기저귀|생리대)/.test(text)) {
     return "single_use_convenience";
   }
@@ -613,7 +630,7 @@ function getWhyFallback(outcomeType, category, product) {
 
   switch (category) {
     case "wet_wipes":
-      return "물티슈는 작은 불편함을 해결할 때마다 아무 생각 없이 여러 장씩 쓰기 쉬운 일회용 제품입니다.\n\n손을 닦거나, 책상을 닦거나, 작은 얼룩을 지울 때마다 새 물티슈 한 장이 바로 쓰이고 버려집니다.";
+      return "물티슈는 작은 불편함을 해결할 때마다 아무 생각 없이 여러 장씩 쓰기 쉬운 제품입니다.\n\n손을 닦거나, 책상을 닦거나, 작은 얼룩을 지울 때마다 새 물티슈 한 장이 바로 뽑히고, 그 흐름이 너무 쉽게 반복됩니다.";
     case "bottled_water":
       return "생수의 핵심은 물보다 편의예요.\n\n원래는 집이나 학교에서 해결되던 물 마시기가, 밖에 나갈 때마다 새 병을 사는 습관으로 바뀌기 쉬운 제품입니다.";
     case "fast_fashion":
@@ -644,27 +661,27 @@ function getSystemInsightFallback(outcomeType, category, product) {
 
   switch (category) {
     case "wet_wipes":
-      return "물티슈는 몇 초만 쓰고 버리지만, 대부분은 금방 사라지는 물건이 아닙니다.\n\n더 큰 문제는 작은 불편함도 일회용품으로 바로 해결하는 습관을 너무 자연스럽게 만든다는 점이에요.";
+      return "물티슈는 몇 초만 쓰고 버리지만, 플라스틱 섬유가 포함된 경우 매립지에서 수십 년, 길게는 그보다 더 오래 남을 수 있습니다.\n\n이 제품은 작은 불편함도 잠깐 쓰고 바로 버리는 방식으로 해결하는 문화가 얼마나 자연스러워졌는지 보여줍니다.";
     case "bottled_water":
-      return "문제는 병 하나보다, 물을 마실 때마다 새 용기를 함께 사는 흐름입니다.\n\n원래는 반복 구매가 필요 없던 일이, 편의 때문에 계속 돈을 내는 일이 된 셈이에요.";
+      return "문제는 병 하나보다, 물을 마실 때마다 새 용기를 함께 사는 흐름입니다.\n\n생수는 금방 마셔 없어지지만, 플라스틱 병은 그보다 훨씬 오래 남습니다.";
     case "fast_fashion":
-      return "패스트패션은 옷이 닳기 전에 마음부터 바꾸게 만듭니다.\n\n그래서 옷장에 입을 옷이 없어서는 아니라, 새 옷이 더 당겨서 또 사게 되는 흐름이 생깁니다.";
+      return "패스트패션은 옷이 닳기 전에 마음부터 바꾸게 만듭니다.\n\n유행은 짧게 지나가지만, 빨리 산 옷은 버려진 뒤에도 훨씬 오래 남고 결국 쌓이기 쉽습니다.";
     case "airpods":
-      return "작고 매끈한 전자기기는 편하지만, 그만큼 수리라는 선택지가 잘 보이지 않습니다.\n\n그래서 고장 난 물건이 아니라, 오래 쓰기 어려운 물건처럼 소비되기 쉬워요.";
+      return "작고 매끈한 전자기기는 편하지만, 그만큼 수리라는 선택지가 잘 보이지 않습니다.\n\n작은 배터리 기기는 버려진 뒤에도 분리와 회수가 쉽지 않아서, 짧게 쓴 전자제품이 오래 남는 구조가 되기 쉽습니다.";
     case "iphone":
-      return "아이폰은 멈추기 전에 마음속에서 먼저 구형이 되기 쉽습니다.\n\n문제는 성능만이 아니라, 아직 되는 기기조차 빨리 바꾸고 싶게 만드는 업그레이드 압박이에요.";
+      return "아이폰은 멈추기 전에 마음속에서 먼저 구형이 되기 쉽습니다.\n\n문제는 성능만이 아니라, 아직 되는 기기조차 빨리 바꾸고 싶게 만드는 업그레이드 압박이에요. 그렇게 밀려난 기기는 버려진 뒤에도 쉽게 사라지지 않습니다.";
     case "shampoo":
       return "샴푸처럼 매일 쓰는 제품은 한 번의 구매보다 반복 방식이 더 중요합니다.\n\n같은 습관이 계속 새 병을 부르면, 소비는 작아 보여도 아주 꾸준히 쌓입니다.";
     case "detergent":
       return "세제는 꼭 필요한 물건처럼 보여서 소비를 돌아보는 대상에서 자주 빠집니다.\n\n그래서 제품보다 포장 반복이 더 조용하게, 더 오래 쌓이기 쉬워요.";
     case "cosmetics":
-      return "화장품은 다 써서 사는 경우보다, 기분 전환이나 새로움 때문에 사는 경우가 많아지기 쉽습니다.\n\n그래서 비슷한 역할의 제품이 서랍 안에서 겹쳐지고, 소비 속도가 사용 속도를 앞지르게 됩니다.";
+      return "화장품은 다 써서 사는 경우보다, 기분 전환이나 새로움 때문에 사는 경우가 많아지기 쉽습니다.\n\n그래서 비슷한 역할의 제품이 서랍 안에서 겹쳐지고, 작은 용기와 패키지는 잠깐 쓰인 뒤에도 오래 남게 됩니다.";
     case "tumbler":
       return "재사용 제품도 여러 개 사기 시작하면 소비를 줄이는 도구가 아니라 소비를 정당화하는 물건이 될 수 있어요.\n\n재사용도 반복 구매가 되면 방향이 달라집니다.";
     case "pads":
-      return "매달 반복되는 소비는 한 번 한 번은 작아 보여도 구조적으로는 아주 꾸준합니다.\n\n그래서 버리는 흐름 자체를 바꾸는 선택이 더 크게 느껴질 수 있어요.";
+      return "매달 반복되는 소비는 한 번 한 번은 작아 보여도 구조적으로는 아주 꾸준합니다.\n\n짧게 쓰고 바로 버리는 제품이 달마다 반복되기 때문에, 버린 뒤에 남는 양도 조용히 계속 커집니다.";
     case "smartphone":
-      return "문제는 기계 하나보다 '고장 전 교체'가 당연해지는 흐름입니다.\n\n배터리와 속도, 새 모델 감각이 교체를 앞으로 당깁니다.";
+      return "문제는 기계 하나보다 '고장 전 교체'가 당연해지는 흐름입니다.\n\n배터리와 속도, 새 모델 감각이 교체를 앞으로 당기고, 그렇게 밀려난 전자제품은 버려진 뒤에도 쉽게 끝나지 않습니다.";
     default:
       return getPatternSystemInsightFallback(pattern, product, outcomeType);
   }
@@ -675,7 +692,7 @@ function getActionStepFallback(outcomeType, category, product) {
 
   switch (category) {
     case "wet_wipes":
-      return "집에서 쓰는 용도라면 행주, 천, 재사용 물수건부터 먼저 써보세요.\n\n손 닦기나 작은 얼룩 정리 정도는 새 물티슈 없이도 충분히 해결되는 경우가 많습니다.";
+      return "집에서 쓰는 용도라면 행주, 수건, 재사용 가능한 물수건부터 먼저 써보세요.\n\n손 닦기나 작은 얼룩 정리 정도는 빨아서 다시 쓰는 천만으로도 충분히 해결되는 경우가 많습니다.";
     case "bottled_water":
       return "집이나 학교에서 해결 가능한 상황이라면 먼저 기존 물병을 다시 써보세요.\n\n매번 새 병을 사는 대신, 물을 들고 나가는 습관부터 바꾸는 쪽이 먼저입니다.";
     case "fast_fashion":
@@ -712,8 +729,8 @@ function getAlternativeFallback(category, outcomeType) {
     case "wet_wipes":
       return {
         name: "생분해성 물티슈",
-        reason: "재사용이 어려운 상황이라면 일반 물티슈보다 덜 오래 남는 방향입니다.",
-        impact: "완벽한 해결은 아니어도, 반복 폐기의 무게를 조금 덜 수 있어요.",
+        reason: "외출, 아기 돌봄, 응급 상황처럼 재사용이 어려운 때에는 일반 물티슈보다 버려진 뒤의 부담을 덜 남기는 방향입니다.",
+        impact: "완벽한 해결은 아니어도, 잠깐 쓰고 오래 남는 흐름을 조금 덜 무겁게 만들 수 있어요.",
         keyword: "생분해성 물티슈"
       };
     case "bottled_water":
@@ -786,6 +803,8 @@ function getAlternativeFallback(category, outcomeType) {
 
 function getPatternWhyFallback(pattern, product, outcomeType) {
   switch (pattern) {
+    case "waste_after_disposal":
+      return `${product}의 문제는 쓰는 순간보다 버린 뒤가 더 길다는 점입니다.\n\n잠깐 쓰고 바로 손에서 사라지지만, 실제로는 그 뒤에 더 오래 남는 경우가 많습니다.`;
     case "single_use_convenience":
       return `${product}의 문제는 한 번 쓰고 버린다는 사실만이 아닙니다.\n\n작은 불편함이 생길 때마다 새것 하나를 바로 꺼내 쓰게 만든다는 점이 더 큽니다.`;
     case "single_use_repeat":
@@ -813,6 +832,8 @@ function getPatternWhyFallback(pattern, product, outcomeType) {
 
 function getPatternSystemInsightFallback(pattern, product, outcomeType) {
   switch (pattern) {
+    case "waste_after_disposal":
+      return `${product}은 쓰이는 시간보다 버려진 뒤의 시간이 훨씬 길 수 있는 물건입니다.\n\n이런 제품이 많아질수록, 잠깐 편했던 선택이 오래 남는 흔적으로 바뀌는 소비 구조가 더 자연스러워집니다.`;
     case "single_use_convenience":
       return `${product}은 작은 불편함도 일회용품으로 해결하게 만드는 흐름을 보여줍니다.\n\n이런 제품이 많아질수록, 빨아서 다시 쓰는 선택지는 점점 덜 떠오르게 됩니다.`;
     case "single_use_repeat":
@@ -840,6 +861,8 @@ function getPatternSystemInsightFallback(pattern, product, outcomeType) {
 
 function getPatternActionFallback(pattern, product, outcomeType) {
   switch (pattern) {
+    case "waste_after_disposal":
+      return `${product}이 꼭 필요한지 한 번 더 보고, 가능하면 여러 번 쓰는 대안이나 포장이 덜한 방향부터 먼저 찾아보세요.\n\n짧게 쓰고 오래 남는 물건일수록, 처음 선택을 늦추는 게 가장 큽니다.`;
     case "single_use_convenience":
       return `${product}을 새로 사기 전에, 집에 있는 천이나 재사용 가능한 도구로 먼저 해결되는지부터 확인해보세요.\n\n완벽한 대안보다, 덜 자동적으로 꺼내 쓰는 선택이 먼저입니다.`;
     case "single_use_repeat":
@@ -867,6 +890,13 @@ function getPatternActionFallback(pattern, product, outcomeType) {
 
 function getPatternAlternativeFallback(pattern) {
   switch (pattern) {
+    case "waste_after_disposal":
+      return {
+        name: "재사용 가능한 대안",
+        reason: "짧게 쓰고 바로 버리는 흐름에서 벗어나는 데 가장 직접적인 방향입니다.",
+        impact: "쓰는 시간보다 버린 뒤가 더 긴 소비를 줄이는 데 도움이 됩니다.",
+        keyword: "재사용 가능한 대안"
+      };
     case "single_use_convenience":
       return {
         name: "재사용 가능한 대체품",
