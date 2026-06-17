@@ -16,14 +16,6 @@ const SYSTEM_PROMPT =
   "2. Is the current option already okay?\n" +
   "3. Is refill, repair, reuse, borrowing, or secondhand better?\n" +
   "4. Only then, if needed, suggest one better search direction.\n\n" +
-  "Required internal reasoning rule:\n" +
-  "- Before returning JSON, create one internal category thesis.\n" +
-  "- The category thesis means: what is the ONE non-obvious thing this product or category reveals about modern consumption?\n" +
-  "- Do not output that thesis as a field.\n" +
-  "- Build the whole answer around it.\n" +
-  "- why must contain that thesis clearly.\n" +
-  "- system_insight must expand that thesis, not repeat it.\n" +
-  "- action_step must respond to that thesis with one realistic move.\n\n" +
   "Style rules:\n" +
   "- Return Korean for all user-facing fields.\n" +
   "- Sound short, confident, human, slightly activist.\n" +
@@ -36,26 +28,7 @@ const SYSTEM_PROMPT =
   "Smartness rule:\n" +
   "- Each product or category needs its own specific insight.\n" +
   "- Do not reuse the same consumer-culture explanation for everything.\n" +
-  "- Identify the unique consumption pattern behind the input.\n" +
-  "- The answer should feel like a realization, not prewritten advice.\n" +
-  "- If the same sentence could work for 10 other products, it is too weak.\n\n" +
-  "Thesis examples:\n" +
-  "- Bad: 물티슈는 쓰레기를 만든다.\n" +
-  "- Good: 물티슈는 작은 불편함도 일회용품으로 해결하게 만든다.\n" +
-  "- Bad: 생수는 플라스틱을 만든다.\n" +
-  "- Good: 생수는 원래 살 필요 없던 물을 반복 구매 상품으로 바꾼다.\n" +
-  "- Bad: 화장품은 포장이 많다.\n" +
-  "- Good: 화장품은 다 쓰기 전에 새로 사고 싶게 만드는 속도와 연결되어 있다.\n\n" +
-  "Voice examples:\n" +
-  "- 문제는 ___이 아닙니다. ___입니다.\n" +
-  "- 사실 더 중요한 건 ___입니다.\n" +
-  "- 이건 제품보다 습관의 문제에 가깝습니다.\n" +
-  "- 완벽한 선택보다, 덜 자동적인 선택이 먼저입니다.\n\n" +
-  "Avoid overusing these endings:\n" +
-  "- ~할 수 있습니다\n" +
-  "- 고려해보세요\n" +
-  "- 도움이 됩니다\n" +
-  "- 일 수 있습니다\n\n" +
+  "- Identify the unique consumption pattern behind the input.\n\n" +
   "Category anchors:\n" +
   "- 물티슈: the issue is how easily one sheet gets pulled out without thinking.\n" +
   "- 생수: the issue is how water became a repeated purchase instead of something often solved without buying.\n" +
@@ -83,14 +56,10 @@ const SYSTEM_PROMPT =
   "- impact_of_switch: short realistic impact.\n" +
   "- coupang_search_keyword: a search keyword, not a product name.\n\n" +
   "Final self-check before answering:\n" +
-  "1. What is the internal category thesis?\n" +
-  "2. Is that thesis non-obvious?\n" +
-  "3. Does why clearly contain that thesis?\n" +
-  "4. Does system_insight expand the thesis instead of repeating it?\n" +
-  "5. Could this answer apply to 10 other products? If yes, rewrite it.\n" +
-  "6. Is there at least one sentence that makes the user think 'wait, that is true'? If no, rewrite it.\n" +
-  "7. Does it sound like a report, consultant, or generic database? If yes, rewrite it.\n" +
-  "8. Is it short? If no, shorten it.\n\n" +
+  "1. Could this answer apply to 20 other products? If yes, rewrite it.\n" +
+  "2. Is there at least one sentence specific to this category? If no, rewrite it.\n" +
+  "3. Would the user think 'I never thought about it that way'? If no, rewrite it.\n" +
+  "4. Is it short? If no, shorten it.\n\n" +
   "Return strict JSON only with exactly these keys:\n" +
   "product_name, outcome_type, verdict, why, system_insight, action_step, is_already_good, alternative_name, alternative_reason, impact_of_switch, coupang_search_keyword.";
 
@@ -155,8 +124,6 @@ async function analyzeWithModel(apiKey, product, model) {
             `제품 또는 브랜드명: ${product}\n` +
             "Return JSON only.\n" +
             "Be specific to this exact input.\n" +
-            "First create an internal category thesis: one non-obvious thing this product or category reveals about modern consumption.\n" +
-            "Then build the whole answer from that thesis.\n" +
             "Start from the most important observation, turn it into a realization, then end with one practical action.\n" +
             "Keep every field short and sharp.\n" +
             "If the best answer is not to buy, say that clearly.\n" +
@@ -235,9 +202,7 @@ function shouldEscalate(result) {
     !result.why ||
     !result.system_insight ||
     !result.action_step ||
-    hasWeakLanguage(combined) ||
-    soundsTooGeneric(result) ||
-    lacksSharpStructure(result)
+    hasWeakLanguage(combined)
   );
 }
 
@@ -255,35 +220,6 @@ function hasWeakLanguage(text) {
   ];
 
   return weakSignals.some((signal) => text.includes(signal));
-}
-
-function soundsTooGeneric(result) {
-  const text = [result.why, result.system_insight].join(" ");
-  const genericSignals = [
-    "환경에 좋",
-    "지속가능한 선택",
-    "친환경적",
-    "환경 부담",
-    "폐기물을 줄",
-    "더 나은 선택"
-  ];
-
-  return genericSignals.some((signal) => text.includes(signal));
-}
-
-function lacksSharpStructure(result) {
-  const why = cleanText(result.why);
-  const systemInsight = cleanText(result.system_insight);
-
-  if (!why || !systemInsight) {
-    return true;
-  }
-
-  if (why === systemInsight) {
-    return true;
-  }
-
-  return why.slice(0, 12) === systemInsight.slice(0, 12) && why.length > 12 && systemInsight.length > 12;
 }
 
 function normalizeOutcomeType(value, parsed, category) {
@@ -515,7 +451,7 @@ function getSystemInsightFallback(outcomeType, category, product) {
     default:
       switch (outcomeType) {
         case "already_good":
-          return `지금 소비에서 더 자주 놓치는 것은 '무엇을 살까'보다 '왜 아직 쓸 수 있는 것을 바꾸게 되는가'입니다.\n\n${product}도 더 좋은 제품을 찾는 순간보다, 교체 주기를 늦추는 쪽이 더 큰 차이를 만들 수 있어요.`;
+          return `${product}의 핵심 문제는 무조건 바꿔야 한다는 데 있지 않습니다.\n\n아직 쓸 수 있는 것을 더 새롭고 더 나아 보인다는 이유로 교체하는 습관이 오히려 더 큰 소비를 만들 수 있어요.`;
         case "reuse_refill":
           return `${product} 같은 물건은 원래부터 자주 다시 사도록 설계된 소비 흐름 안에 들어가기 쉽습니다.\n\n리필, 수리, 재사용 같은 선택은 제품을 바꾸는 것보다 그 흐름 자체를 끊는 데 더 가깝습니다.`;
         case "better_alternative":
