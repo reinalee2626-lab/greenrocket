@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -74,6 +75,91 @@
       .flip-back {
         transform: rotateY(180deg);
       }
+
+      .hero-shell {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(217, 231, 220, 0.9);
+        border-radius: 2.25rem;
+        min-height: 78vh;
+        background: #102018;
+        box-shadow: 0 30px 70px rgba(18, 34, 24, 0.18);
+      }
+
+      .hero-backgrounds {
+        position: absolute;
+        inset: 0;
+      }
+
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        opacity: 0;
+        transform: scale(1.03);
+        transition: opacity 1.6s ease, transform 8s ease;
+      }
+
+      .hero-bg.is-active {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(9, 17, 13, 0.78) 0%, rgba(9, 17, 13, 0.56) 42%, rgba(9, 17, 13, 0.7) 100%),
+          radial-gradient(circle at top left, rgba(122, 181, 139, 0.16), transparent 30%);
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-copy {
+        color: rgba(247, 250, 247, 0.96);
+        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+      }
+
+      .hero-copy .hero-kicker {
+        background: rgba(237, 246, 239, 0.14);
+        color: #f7faf7;
+        backdrop-filter: blur(8px);
+      }
+
+      .hero-copy .hero-subtext {
+        color: rgba(237, 246, 239, 0.82);
+      }
+
+      .hero-copy .hero-info-card {
+        border-color: rgba(255, 255, 255, 0.12);
+        background: rgba(13, 25, 18, 0.42);
+        backdrop-filter: blur(12px);
+      }
+
+      .hero-copy .hero-info-card p {
+        color: rgba(237, 246, 239, 0.88);
+      }
+
+      .hero-copy .hero-info-card .hero-info-title {
+        color: #f7faf7;
+      }
+
+      @media (max-width: 1023px) {
+        .hero-shell {
+          min-height: auto;
+        }
+
+        .hero-overlay {
+          background:
+            linear-gradient(180deg, rgba(9, 17, 13, 0.74) 0%, rgba(9, 17, 13, 0.64) 100%),
+            radial-gradient(circle at top left, rgba(122, 181, 139, 0.16), transparent 34%);
+        }
+      }
     </style>
   </head>
   <body class="text-text antialiased">
@@ -120,70 +206,96 @@
         <section id="tool-page" class="app-page">
           <div class="mx-auto max-w-6xl px-5 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
             <div id="search-view">
-              <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-                <div>
-                  <span class="inline-flex rounded-full bg-mint px-3 py-1 text-sm font-semibold text-forest">
-                    지속가능한 소비를 위한 작은 도구
-                  </span>
-                  <h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-[-0.04em] text-text sm:text-5xl lg:text-6xl">
-                    GreenRocket
-                  </h1>
-                  <p class="mt-5 text-2xl font-bold leading-snug tracking-[-0.03em] text-text sm:text-3xl">
-                    사기 전에 한 번 더 생각하는 소비
-                  </p>
-                  <p class="mt-4 max-w-2xl text-base leading-8 text-subtext sm:text-lg">
-                    필요한 소비인지 먼저 돌아보고, 정말 필요하다면 더 지속가능한 선택을 찾아보세요.
-                  </p>
-
-                  <div class="mt-8 rounded-3xl border border-line bg-white p-5 shadow-soft">
-                    <p class="text-sm font-semibold text-forest">이 도구는 사기 전에 판단하는 걸 돕습니다.</p>
-                    <p class="mt-2 text-sm leading-7 text-subtext">
-                      먼저 이 소비가 정말 필요한지,
-                      <br />
-                      이미 가진 것으로 충분한지,
-                      <br />
-                      그리고 꼭 필요하다면 어떤 방향이 더 나은지 함께 살펴봅니다.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="rounded-[2rem] border border-line bg-white p-6 shadow-soft sm:p-8">
-                  <p class="text-sm font-semibold text-forest">제품 입력</p>
-                  <form id="search-form" class="mt-5">
-                    <label for="product-input" class="sr-only">제품 입력</label>
-                    <div class="rounded-2xl border border-line bg-cream p-2">
-                      <div class="flex flex-col gap-3 sm:flex-row">
-                        <input
-                          id="product-input"
-                          type="text"
-                          required
-                          placeholder="제품명이나 카테고리를 입력하세요 예: 샴푸, 물티슈, 세제"
-                          class="h-14 w-full rounded-xl border border-transparent bg-white px-4 text-base text-text outline-none transition placeholder:text-subtext/70 focus:border-forest/20 focus:ring-2 focus:ring-forest/10"
-                        />
-                        <button
-                          type="submit"
-                          class="h-14 rounded-xl bg-forest px-6 text-base font-semibold text-white transition hover:bg-[#285b3b]"
-                        >
-                          친환경 대안 찾기
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                  <p class="mt-4 text-sm leading-6 text-subtext">
-                    사기 전에, 한 번만 멈춰보세요.
-                  </p>
-
+              <div class="hero-shell">
+                <div class="hero-backgrounds" aria-hidden="true">
                   <div
-                    id="loading-state"
-                    class="mt-6 hidden rounded-2xl border border-line bg-mint px-4 py-4 text-sm font-medium text-forest"
-                  >
-                    제품을 살펴보는 중이에요...
-                  </div>
-
-                  <div
-                    id="error-state"
-                    class="mt-6 hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-4 text-sm leading-6 text-red-600"
+                    class="hero-bg is-active"
+                    data-hero-bg
+                    style="background-image: url('/images/hero/turtle.jpg');"
                   ></div>
+                  <div
+                    class="hero-bg"
+                    data-hero-bg
+                    style="background-image: url('/images/hero/consumerism.jpg');"
+                  ></div>
+                  <div
+                    class="hero-bg"
+                    data-hero-bg
+                    style="background-image: url('/images/hero/planet.jpg');"
+                  ></div>
+                  <div
+                    class="hero-bg"
+                    data-hero-bg
+                    style="background-image: url('/images/hero/bottle.jpg');"
+                  ></div>
+                </div>
+                <div class="hero-overlay" aria-hidden="true"></div>
+
+                <div class="hero-content grid gap-8 px-5 py-8 sm:px-6 sm:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:px-8 lg:py-14">
+                  <div class="hero-copy lg:pt-6">
+                    <span class="hero-kicker inline-flex rounded-full px-3 py-1 text-sm font-semibold">
+                      지속가능한 소비를 위한 작은 도구
+                    </span>
+                    <h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-[-0.04em] sm:text-5xl lg:text-6xl">
+                      GreenRocket
+                    </h1>
+                    <p class="mt-5 text-2xl font-bold leading-snug tracking-[-0.03em] sm:text-3xl">
+                      사기 전에 한 번 더 생각하는 소비
+                    </p>
+                    <p class="hero-subtext mt-4 max-w-2xl text-base leading-8 sm:text-lg">
+                      필요한 소비인지 먼저 돌아보고, 정말 필요하다면 더 지속가능한 선택을 찾아보세요.
+                    </p>
+
+                    <div class="hero-info-card mt-8 rounded-3xl border p-5 shadow-soft">
+                      <p class="hero-info-title text-sm font-semibold">이 도구는 사기 전에 판단하는 걸 돕습니다.</p>
+                      <p class="mt-2 text-sm leading-7">
+                        먼저 이 소비가 정말 필요한지,
+                        <br />
+                        이미 가진 것으로 충분한지,
+                        <br />
+                        그리고 꼭 필요하다면 어떤 방향이 더 나은지 함께 살펴봅니다.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="rounded-[2rem] border border-line bg-white p-6 shadow-soft sm:p-8">
+                    <p class="text-sm font-semibold text-forest">제품 입력</p>
+                    <form id="search-form" class="mt-5">
+                      <label for="product-input" class="sr-only">제품 입력</label>
+                      <div class="rounded-2xl border border-line bg-cream p-2">
+                        <div class="flex flex-col gap-3 sm:flex-row">
+                          <input
+                            id="product-input"
+                            type="text"
+                            required
+                            placeholder="제품명이나 카테고리를 입력하세요 예: 샴푸, 물티슈, 세제"
+                            class="h-14 w-full rounded-xl border border-transparent bg-white px-4 text-base text-text outline-none transition placeholder:text-subtext/70 focus:border-forest/20 focus:ring-2 focus:ring-forest/10"
+                          />
+                          <button
+                            type="submit"
+                            class="h-14 rounded-xl bg-forest px-6 text-base font-semibold text-white transition hover:bg-[#285b3b]"
+                          >
+                            친환경 대안 찾기
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                    <p class="mt-4 text-sm leading-6 text-subtext">
+                      사기 전에, 한 번만 멈춰보세요.
+                    </p>
+
+                    <div
+                      id="loading-state"
+                      class="mt-6 hidden rounded-2xl border border-line bg-mint px-4 py-4 text-sm font-medium text-forest"
+                    >
+                      제품을 살펴보는 중이에요...
+                    </div>
+
+                    <div
+                      id="error-state"
+                      class="mt-6 hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-4 text-sm leading-6 text-red-600"
+                    ></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -771,6 +883,7 @@
       const alternativeReason = document.getElementById("alternative-reason");
       const impactOfSwitch = document.getElementById("impact-of-switch");
       const productLink = document.getElementById("product-link");
+      const heroBackgrounds = Array.from(document.querySelectorAll("[data-hero-bg]"));
 
       const pageSections = {
         tool: document.getElementById("tool-page"),
@@ -779,6 +892,8 @@
       };
       const pageButtons = document.querySelectorAll(".page-nav");
       const flipCards = document.querySelectorAll(".flip-card");
+      let activeHeroIndex = 0;
+      let heroRotationTimer = null;
 
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -1204,8 +1319,33 @@ ${productName}도 더 좋은 제품을 찾는 순간보다, 교체 주기를 늦
         return `${baseLabel} 찾아보기`;
       }
 
+      function setActiveHero(index) {
+        heroBackgrounds.forEach((background, backgroundIndex) => {
+          background.classList.toggle("is-active", backgroundIndex === index);
+        });
+      }
+
+      function startHeroRotation() {
+        if (heroBackgrounds.length <= 1) {
+          return;
+        }
+
+        setActiveHero(activeHeroIndex);
+
+        if (heroRotationTimer) {
+          window.clearInterval(heroRotationTimer);
+        }
+
+        heroRotationTimer = window.setInterval(() => {
+          activeHeroIndex = (activeHeroIndex + 1) % heroBackgrounds.length;
+          setActiveHero(activeHeroIndex);
+        }, 8000);
+      }
+
       showPage("tool");
       showSearchView();
+      startHeroRotation();
     </script>
   </body>
 </html>
+```
